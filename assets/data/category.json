@@ -1,0 +1,39 @@
+{
+  "categories": [
+    {
+      "imgUrl": "assets/image/category/ngeu_so.png",
+      "name": "Sò Ốc",
+      "code": "OC"
+    },
+    {
+      "imgUrl": "assets/image/category/tom.png",
+      "name": "Tôm",
+      "code": "TOM"
+    },
+    {
+      "imgUrl": "assets/image/category/muc.png",
+      "name": "Mực",
+      "code": "MUC"
+    },
+    {
+      "imgUrl": "assets/image/category/cua.png",
+      "name": "Cua",
+      "code": "CUA"
+    },
+    {
+      "imgUrl": "assets/image/category/ca.png",
+      "name": "Cá",
+      "code": "CA"
+    },
+    {
+      "imgUrl": "assets/image/category/bia.png",
+      "name": "Bia",
+      "code": "BIA"
+    },
+    {
+      "imgUrl": "assets/image/category/thuoc_la.png",
+      "name": "Thuốc lá",
+      "code": "THUOC_LA"
+    }
+  ]
+}
