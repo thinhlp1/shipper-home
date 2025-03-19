@@ -6,6 +6,7 @@ import 'package:base/models/customer.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'add_customer_action.dart';
 
 class AddCustomerView extends StatefulWidget {
@@ -47,23 +48,48 @@ class _AddCustomerViewState
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
+                      child: Obx(
+                    () => TextField(
                       controller: viewActions.phoneController,
+                      style: Theme.of(context).textTheme.labelMedium,
                       decoration: InputDecoration(
                         labelText: 'Số điện thoại',
                         errorText: viewActions.phoneError.value,
+                        hintStyle:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                ),
                         prefixIcon: const Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                              color:
+                                  Colors.blue), // Màu viền khi có lỗi và focus
+                        ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
                       ),
                     ),
-                  ),
+                  )),
                 ],
               ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -73,9 +99,23 @@ class _AddCustomerViewState
                         labelText: 'Họ tên',
                         errorText: viewActions.nameError.value,
                         prefixIcon: const Icon(Icons.person),
-                        border: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                              color:
+                                  Colors.blue), // Màu viền khi có lỗi và focus
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
@@ -94,9 +134,23 @@ class _AddCustomerViewState
                         labelText: 'Địa chỉ',
                         errorText: viewActions.addressError.value,
                         prefixIcon: const Icon(Icons.map),
-                        border: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                              color:
+                                  Colors.blue), // Màu viền khi có lỗi và focus
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
@@ -115,9 +169,23 @@ class _AddCustomerViewState
                         labelText: 'Ghi chú',
                         errorText: viewActions.noteError.value,
                         prefixIcon: const Icon(Icons.edit),
-                        border: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                              color:
+                                  Colors.blue), // Màu viền khi có lỗi và focus
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
@@ -126,7 +194,6 @@ class _AddCustomerViewState
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
               Obx(() {
                 return GridView.builder(
                   shrinkWrap: true,

@@ -141,46 +141,48 @@ class AddCustomerAction extends ViewActions {
   /// A `Future<void>` indicating the completion of the update operation.
   /// The selected image's file path is returned when the dialog is dismissed.
   Future<void> updateCustomer(Customer customer) async {
-    customer.name = nameController.text;
-    customer.phone = phoneController.text;
-    customer.note = noteController.text;
-    customer.address = addressController.text;
-    customer.updatedAt = DateTime.now();
+    if (validate()) {
+      customer.name = nameController.text;
+      customer.phone = phoneController.text;
+      customer.note = noteController.text;
+      customer.address = addressController.text;
+      customer.updatedAt = DateTime.now();
 
-    // Get the existing images from the customer
-    List<String?> existingImages = customer.imageUrl;
+      // Get the existing images from the customer
+      List<String?> existingImages = customer.imageUrl;
 
-    // Find images to delete
-    List<String?> imagesToDelete =
-        existingImages.where((image) => !listImage.contains(image)).toList();
+      // Find images to delete
+      List<String?> imagesToDelete =
+          existingImages.where((image) => !listImage.contains(image)).toList();
 
-    // Find new images to add
-    List<String?> newImages =
-        listImage.where((image) => !existingImages.contains(image)).toList();
+      // Find new images to add
+      List<String?> newImages =
+          listImage.where((image) => !existingImages.contains(image)).toList();
 
-    // Delete images that are no longer needed
-    for (String? imagePath in imagesToDelete) {
-      if (imagePath != null) {
-        await FileUtils.deleteImage(imagePath);
-        await _customerService.deleteCustomerImage(customer.id!, imagePath);
+      // Delete images that are no longer needed
+      for (String? imagePath in imagesToDelete) {
+        if (imagePath != null) {
+          await FileUtils.deleteImage(imagePath);
+          await _customerService.deleteCustomerImage(customer.id!, imagePath);
+        }
       }
-    }
 
-    // Save new images to the gallery
-    List<String?> savedImagePaths =
-        await FileUtils.saveToGallery(newImages.whereType<String>().toList());
+      // Save new images to the gallery
+      List<String?> savedImagePaths =
+          await FileUtils.saveToGallery(newImages.whereType<String>().toList());
 
-    // Save new image paths to the database
-    for (String? imagePath in savedImagePaths) {
-      if (imagePath != null) {
-        await _customerService.saveCustomerImage(customer.id!, imagePath);
+      // Save new image paths to the database
+      for (String? imagePath in savedImagePaths) {
+        if (imagePath != null) {
+          await _customerService.saveCustomerImage(customer.id!, imagePath);
+        }
       }
+
+      await _customerService.updateCustomer(customer.id!, customer);
+
+      Get.back();
+      SnackbarUtil.showSuccessSnackbar('Thành công', 'Cập nhật thành công');
     }
-
-    await _customerService.updateCustomer(customer.id!, customer);
-
-    Get.back();
-    SnackbarUtil.showSuccessSnackbar('Thành công', 'Cập nhật thành công');
   }
 
   /// Asynchronously adds an image to the list of images.

@@ -38,14 +38,6 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           leadingWidth: Utils.screenWidth! * 0.3,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search, color: Colors.black, size: 35),
-              onPressed: () {
-                // Xử lý sự kiện khi nhấn vào biểu tượng tìm kiếm
-              },
-            )
-          ],
           leading: Image.asset(
             Assets.APP_ICON,
           )),
@@ -217,11 +209,20 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         },
         decoration: InputDecoration(
           hintText: title,
+          prefixIcon: Icon(Icons.search,
+              color: HexColor.fromHex(ThemeColors.SECONDARY)),
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(color: Colors.grey),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide:
+                BorderSide(color: HexColor.fromHex(ThemeColors.PRIMARY)),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         ),
       ),
     );

@@ -92,7 +92,15 @@ class _CustomerComponenttState
                 boundaryMargin: const EdgeInsets.all(20.0),
                 minScale: 0.5,
                 maxScale: 4.0,
-                child: Image.network(imageUrl, fit: BoxFit.contain),
+                child: imageUrl.startsWith('http')
+                    ? Image.network(
+                        imageUrl,
+                        fit: BoxFit.contain,
+                      )
+                    : Image.file(
+                        File(imageUrl),
+                        fit: BoxFit.contain,
+                      ),
               ),
               Positioned(
                 top: 20,

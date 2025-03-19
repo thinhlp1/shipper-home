@@ -34,17 +34,15 @@ class SnackbarUtil {
     );
   }
 
- /// Shows a warning snackbar with the given [title] and [message].
+  /// Shows a warning snackbar with the given [title] and [message].
   static void showWarningSnackbar(String title, String message) {
-    Get.snackbar(
-      title,
-      message,
+    Get.rawSnackbar(
+      message: message,
       snackPosition: SnackPosition.BOTTOM,
       icon: const Icon(Icons.warning, color: Colors.orange),
       backgroundColor: Colors.white,
       borderColor: Colors.orange,
       borderWidth: 1.0,
-      colorText: Colors.orange,
       duration: const Duration(seconds: 2),
       margin: const EdgeInsets.all(8.0),
     );
