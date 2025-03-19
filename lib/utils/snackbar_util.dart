@@ -13,7 +13,7 @@ class SnackbarUtil {
       borderColor: Colors.green,
       borderWidth: 1.0,
       colorText: Colors.green,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(microseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }
@@ -29,21 +29,22 @@ class SnackbarUtil {
       borderColor: Colors.red,
       borderWidth: 1.0,
       colorText: Colors.red,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(microseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }
 
   /// Shows a warning snackbar with the given [title] and [message].
   static void showWarningSnackbar(String title, String message) {
-    Get.rawSnackbar(
-      message: message,
+    Get.snackbar(
+      title,
+      message,
       snackPosition: SnackPosition.BOTTOM,
       icon: const Icon(Icons.warning, color: Colors.orange),
       backgroundColor: Colors.white,
       borderColor: Colors.orange,
       borderWidth: 1.0,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(microseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }

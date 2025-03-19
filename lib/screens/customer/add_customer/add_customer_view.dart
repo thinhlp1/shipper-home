@@ -36,7 +36,9 @@ class _AddCustomerViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thêm khách hàng'),
+        title: Text(widget.customer != null
+            ? 'Cập nhật khách hàng'
+            : 'Thêm khách hàng'),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -94,8 +96,13 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.nameController,
+                      style: Theme.of(context).textTheme.labelMedium,
                       decoration: InputDecoration(
                         labelText: 'Họ tên',
+                        hintStyle:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                ),
                         errorText: viewActions.nameError.value,
                         prefixIcon: const Icon(Icons.person),
                         enabledBorder: OutlineInputBorder(
@@ -128,10 +135,15 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.addressController,
+                      style: Theme.of(context).textTheme.labelMedium,
                       maxLines: 2,
                       decoration: InputDecoration(
                         labelText: 'Địa chỉ',
                         errorText: viewActions.addressError.value,
+                        hintStyle:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                ),
                         prefixIcon: const Icon(Icons.map),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -163,9 +175,14 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.noteController,
+                      style: Theme.of(context).textTheme.labelMedium,
                       maxLines: 2,
                       decoration: InputDecoration(
                         labelText: 'Ghi chú',
+                        hintStyle:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                ),
                         errorText: viewActions.noteError.value,
                         prefixIcon: const Icon(Icons.edit),
                         enabledBorder: OutlineInputBorder(
@@ -261,7 +278,7 @@ class _AddCustomerViewState
                   ),
                 ),
                 child: widget.customer != null
-                    ? const Text('Cập nhật khách hàng')
+                    ? const Text('Cập nhật')
                     : const Text('Thêm khách hàng'),
               ),
             ],
