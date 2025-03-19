@@ -75,11 +75,6 @@ class CustomerService {
       return a.position.compareTo(b.position);
     });
 
-    // Print customers to debug console
-    customers.forEach((customer) {
-      print('Customer: ' + customer.toMap().toString());
-    });
-
     return customers;
   }
 
@@ -100,7 +95,6 @@ class CustomerService {
       where: '${DBCustomerColumn.id} = ?',
       whereArgs: [id],
     );
-    print('Customer isFavorite status updated');
   }
 
   /// Updates the positions of a list of customers in the database.
@@ -158,7 +152,6 @@ class CustomerService {
       DBCustomerFileColumn.fileId: fileId,
     });
 
-    print('Customer image saved');
   }
 
   Future<void> deleteCustomerImage(int customerId, String imagePath) async {
@@ -185,7 +178,6 @@ class CustomerService {
               '${DBCustomerFileColumn.customerId} = ? AND ${DBCustomerFileColumn.fileId} = ?',
           whereArgs: [customerId, fileId]);
 
-      print('Customer image deleted');
     }
   }
 
@@ -193,7 +185,6 @@ class CustomerService {
     final db = await _databaseService.database;
     await db.update(DBTable.customer, customer.toMap(),
         where: '${DBCustomerColumn.id} = ?', whereArgs: [id]);
-    print('Customer updated');
   }
 
   /// Deletes a customer from the database.
@@ -205,7 +196,6 @@ class CustomerService {
     final db = await _databaseService.database;
     await db.delete(DBTable.customer,
         where: '${DBCustomerColumn.id} = ?', whereArgs: [id]);
-    print('Customer deleted');
   }
 
   /// Get the last customer added

@@ -1,5 +1,5 @@
 import 'package:base/components/customer/customer_component.dart';
-import 'package:base/config/ViewWidget.dart';
+import 'package:base/config/view_widget.dart';
 import 'package:base/extensions/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';

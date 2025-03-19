@@ -1,5 +1,5 @@
-import 'package:base/config/GlobalStore.dart';
-import 'package:base/config/ViewWidget.dart';
+import 'package:base/config/global_store.dart';
+import 'package:base/config/view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:base/api/Client.dart';
-import 'package:base/config/GlobalStore.dart';
-import 'package:base/config/Injection.dart';
+import 'package:base/config/global_store.dart';
+import 'package:base/config/injection.dart';
 import 'package:base/extensions/hex_color.dart';
-import 'package:base/screens/main/View.dart';
+import 'package:base/screens/main/view.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';

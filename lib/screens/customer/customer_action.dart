@@ -1,13 +1,14 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
-import 'package:base/config/ViewActions.dart';
+import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/service/database_service.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class CustomerAction extends ViewActions {
   RxList<Customer> listCustomer = <Customer>[].obs;
@@ -142,9 +143,6 @@ class CustomerAction extends ViewActions {
             customer.phone.contains(keyword) ||
             customer.address.toLowerCase().contains(keyword.toLowerCase());
       }).toList();
-    }
-    for (var customer in listCustomer) {
-      print('Customer: ' + customer.toMap().toString());
     }
   }
 

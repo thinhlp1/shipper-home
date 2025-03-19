@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:base/config/ViewActions.dart';
+import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/utils/file_util.dart';
@@ -267,6 +267,7 @@ class AddCustomerAction extends ViewActions {
                   title: const Text('Chọn từ thư viện'),
                   onTap: () async {
                     String image = await pickImage(ImageSource.gallery);
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context, image);
                   },
                 ),
@@ -275,6 +276,7 @@ class AddCustomerAction extends ViewActions {
                   title: const Text('Chụp ảnh'),
                   onTap: () async {
                     String image = await pickImage(ImageSource.camera);
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context, image);
                   },
                 ),

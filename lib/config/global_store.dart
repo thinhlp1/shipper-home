@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class GlobalStore with ChangeNotifier {
+  // ignore: unused_field
   final Client _client;
   GlobalStore(this._client);
 

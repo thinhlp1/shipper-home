@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:base/utils/constant.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';

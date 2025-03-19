@@ -84,7 +84,6 @@ class ViewActions{
   }
 
   Future<void> showAlertDialog(String messageDialog) {
-    // TODO: Show error
     return Get.dialog(AlertDialog(
       title: const Text('Cảnh báo'),
       content: Text(messageDialog),

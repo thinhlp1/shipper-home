@@ -1,4 +1,5 @@
-import 'dart:ffi';
+
+// ignore_for_file: avoid_print
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -138,7 +139,6 @@ class DatabaseService {
 
         // **Inser default data**
         await insertDefaultData(db);
-        ;
       },
     );
   }
@@ -197,7 +197,7 @@ class DatabaseService {
     // Chèn khách hàng mẫu
     int customer1Id = await db.insert(DBTable.customer, {
       DBCustomerColumn.name: 'Nguyễn Văn A',
-      DBCustomerColumn.phone: '0123456789',
+      DBCustomerColumn.phone: '0334831013',
       DBCustomerColumn.note: 'Khách VIP',
       DBCustomerColumn.map: '',
       DBCustomerColumn.address: 'Hà Nội',
@@ -206,7 +206,7 @@ class DatabaseService {
       DBCustomerColumn.deleted: 0,
     });
 
-    int customer2Id = await db.insert(DBTable.customer, {
+    await db.insert(DBTable.customer, {
       DBCustomerColumn.name: 'Trần Thị B',
       DBCustomerColumn.phone: '0334831013',
       DBCustomerColumn.note: 'Khách mới',

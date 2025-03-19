@@ -1,4 +1,4 @@
-import 'package:base/config/ViewActions.dart';
+import 'package:base/config/view_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

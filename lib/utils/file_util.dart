@@ -32,7 +32,6 @@ class FileUtils {
         savedPaths.add(newImage.path);
       }
     } else {
-      print("Permission Denied");
     }
 
     return savedPaths;

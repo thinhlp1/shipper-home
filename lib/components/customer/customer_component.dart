@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:base/config/ViewWidget.dart';
+import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'customer_component_action.dart';
 
 class CustomerComponent extends StatefulWidget {
   @override
+  // ignore: overridden_fields
   final Key? key;
   final Customer customer;
 

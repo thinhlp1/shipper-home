@@ -1,4 +1,4 @@
-import 'package:base/config/ViewActions.dart';
+import 'package:base/config/view_actions.dart';
 import 'package:base/screens/customer/customer_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

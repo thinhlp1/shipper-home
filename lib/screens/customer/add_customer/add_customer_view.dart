@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:base/config/ViewWidget.dart';
+import 'package:base/config/view_widget.dart';
 import 'package:base/extensions/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'add_customer_action.dart';
 
 class AddCustomerView extends StatefulWidget {
