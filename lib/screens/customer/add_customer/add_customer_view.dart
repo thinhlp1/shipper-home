@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:base/config/view_widget.dart';
-import 'package:base/extensions/hex_color.dart';
+import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
@@ -210,6 +210,21 @@ class _AddCustomerViewState
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: GestureDetector(
+                      onTap: viewActions.getCurrentLocation,
+                      child: const Text(
+                        'Xác định vị trí',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
               Obx(() {
                 return GridView.builder(
                   shrinkWrap: true,

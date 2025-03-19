@@ -3,7 +3,7 @@ import 'package:base/config/view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../extensions/hex_color.dart';
+import '../../utils/hex_color.dart';
 import '../../utils/theme_color.dart';
 import 'Actions.dart';
 

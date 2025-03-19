@@ -1,6 +1,6 @@
 import 'package:base/components/customer/customer_component.dart';
 import 'package:base/config/view_widget.dart';
-import 'package:base/extensions/hex_color.dart';
+import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
 import 'package:base/utils/assets.dart';

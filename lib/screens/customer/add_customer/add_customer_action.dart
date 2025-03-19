@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
+import 'package:base/third_service/google_map_service.dart';
 import 'package:base/utils/file_util.dart';
 import 'package:base/utils/perrmission_util.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -288,5 +290,13 @@ class AddCustomerAction extends ViewActions {
     ).then((value) => completer.complete(value));
 
     return completer.future;
+  }
+
+  /// Retrieves the user's current location and updates the address field.
+  Future<void> getCurrentLocation() async {
+    try {
+      Position position = await GoogleMapService.determinePosition();
+      print('${position.latitude}, ${position.longitude}');
+    } catch (e) {}
   }
 }

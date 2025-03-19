@@ -1,5 +1,5 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:device_info/device_info.dart';
 import 'package:base/utils/constant.dart';
 import 'dart:io';
 
