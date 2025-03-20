@@ -13,7 +13,7 @@ class SnackbarUtil {
       borderColor: Colors.green,
       borderWidth: 1.0,
       colorText: Colors.green,
-      duration: const Duration(microseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }
@@ -29,7 +29,7 @@ class SnackbarUtil {
       borderColor: Colors.red,
       borderWidth: 1.0,
       colorText: Colors.red,
-      duration: const Duration(microseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }
@@ -44,7 +44,23 @@ class SnackbarUtil {
       backgroundColor: Colors.white,
       borderColor: Colors.orange,
       borderWidth: 1.0,
-      duration: const Duration(microseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.all(8.0),
+    );
+  }
+
+  /// Shows an info snackbar with the given [title] and [message].
+  static void showInfoSnackbar(String title, String message) {
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      icon: const Icon(Icons.info, color: Colors.blue),
+      backgroundColor: Colors.white,
+      borderColor: Colors.blue,
+      borderWidth: 1.0,
+      colorText: Colors.blue,
+      duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.all(8.0),
     );
   }

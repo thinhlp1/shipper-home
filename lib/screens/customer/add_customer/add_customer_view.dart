@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:base/config/view_widget.dart';
+import 'package:base/utils/assets.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/theme_color.dart';
@@ -56,29 +57,32 @@ class _AddCustomerViewState
                       decoration: InputDecoration(
                         labelText: 'Số điện thoại',
                         errorText: viewActions.phoneError.value,
-                        hintStyle:
+                        labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
                                 ),
-                        prefixIcon: const Icon(Icons.phone),
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.blue),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(
                               color:
                                   Colors.blue), // Màu viền khi có lỗi và focus
@@ -90,7 +94,6 @@ class _AddCustomerViewState
                   )),
                 ],
               ),
-              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -99,26 +102,29 @@ class _AddCustomerViewState
                       style: Theme.of(context).textTheme.labelMedium,
                       decoration: InputDecoration(
                         labelText: 'Họ tên',
-                        hintStyle:
+                        labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
                                 ),
                         errorText: viewActions.nameError.value,
-                        prefixIcon: const Icon(Icons.person),
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.blue),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(
                               color:
                                   Colors.blue), // Màu viền khi có lỗi và focus
@@ -140,25 +146,28 @@ class _AddCustomerViewState
                       decoration: InputDecoration(
                         labelText: 'Địa chỉ',
                         errorText: viewActions.addressError.value,
-                        hintStyle:
+                        labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
                                 ),
-                        prefixIcon: const Icon(Icons.map),
+                        prefixIcon: Icon(
+                          Icons.map,
+                          color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.blue),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(
                               color:
                                   Colors.blue), // Màu viền khi có lỗi và focus
@@ -179,26 +188,29 @@ class _AddCustomerViewState
                       maxLines: 2,
                       decoration: InputDecoration(
                         labelText: 'Ghi chú',
-                        hintStyle:
+                        labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
                                 ),
                         errorText: viewActions.noteError.value,
-                        prefixIcon: const Icon(Icons.edit),
+                        prefixIcon: Icon(
+                          Icons.edit,
+                          color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.blue),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(color: Colors.grey),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: const BorderSide(
                               color:
                                   Colors.blue), // Màu viền khi có lỗi và focus
@@ -210,15 +222,84 @@ class _AddCustomerViewState
                   ),
                 ],
               ),
+              Obx(
+                () => Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Assets.LOGO_GOOGLE_MAPS,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextField(
+                        controller: viewActions.mapController,
+                        style: Theme.of(context).textTheme.labelMedium,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelText: 'Tọa độ',
+                          labelStyle:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                          suffixIcon: GestureDetector(
+                            onTap: viewActions.getCurrentLocation,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Icon(
+                                Icons.my_location,
+                                color: viewActions.mapPosition.value == ""
+                                    ? HexColor.fromHex(ThemeColors.GREY)
+                                    : HexColor.fromHex(ThemeColors.PRIMARY),
+                              ),
+                            ),
+                          ),
+                          errorText: viewActions.mapError.value,
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          errorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedErrorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
                     child: GestureDetector(
-                      onTap: viewActions.getCurrentLocation,
-                      child: const Text(
-                        'Xác định vị trí',
-                        style: TextStyle(color: Colors.blue),
+                      onTap: viewActions.openGoogleMaps,
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Xem trên Google maps',
+                            style: TextStyle(color: Colors.blue),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(width: 5),
+                          Image.asset(
+                            Assets.LOGO_GOOGLE_MAPS,
+                            width: 15,
+                            height: 15,
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -1,4 +1,4 @@
-package thinhlp.shipperlink
+package thinhlp.shipperhome
 
 import io.flutter.embedding.android.FlutterActivity
 

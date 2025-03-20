@@ -1,6 +1,6 @@
 # Flutter Base Source
 
-Shipper Link is mobile app for shipper can manager their customer
+Shipper Home is mobile app for shipper can manager their customer
 - List custmer
 - Call, favorite
 - Get map position, picture

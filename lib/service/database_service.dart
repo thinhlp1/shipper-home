@@ -63,7 +63,7 @@ class DatabaseService {
 
   DatabaseService._contructor();
 
-  final String _dbName = 'shipper_link.db';
+  final String _dbName = 'shipper_home.db';
 
   Future<Database> get database async {
     if (_database != null) return _database!;

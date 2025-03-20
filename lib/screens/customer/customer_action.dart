@@ -6,6 +6,8 @@ import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/service/database_service.dart';
+import 'package:base/third_service/google_map_service.dart';
+import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -169,6 +171,27 @@ class CustomerAction extends ViewActions {
 
     Get.back();
     SnackbarUtil.showSuccessSnackbar('Thành công', 'Xóa thành công');
+  }
+
+  /// Opens Google Maps at the specified latitude and longitude.
+  ///
+  /// This function constructs a URL to open Google Maps with the given
+  /// coordinates. If the URL can be launched, it will open Google Maps
+  /// at the specified location. If the URL cannot be launched, it will
+  /// display an alert dialog with an error message.
+  ///
+  /// Parameters:
+  /// - mapPosition: The latitude and longitude of the location to open in Google Maps.
+  Future<void> openGoogleMaps(String mapPosition) async {
+    if (mapPosition != '') {
+      List<String> coordinates = mapPosition.split(',');
+      double latitude = double.parse(coordinates[0].trim());
+      double longitude = double.parse(coordinates[1].trim());
+      await GoogleMapService.openGoogleMaps(
+        latitude,
+        longitude,
+      );
+    }
   }
 
   void callCustomer(int id) {

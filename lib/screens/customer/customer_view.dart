@@ -3,7 +3,6 @@ import 'package:base/config/view_widget.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
-import 'package:base/utils/assets.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +35,8 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
-          leadingWidth: Utils.screenWidth! * 0.3,
-          leading: Image.asset(
-            Assets.APP_ICON,
-          )),
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         children: [
           _buildTextFormFied(
@@ -80,6 +76,8 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                     onCallPressed: (int id) => viewActions.callCustomer(id),
                     onEditPressed: (Customer customer) =>
                         _goToEditCustomer(customer),
+                    onMapPressed: (String map) =>
+                        viewActions.openGoogleMaps(map),
                   ),
                 );
               },

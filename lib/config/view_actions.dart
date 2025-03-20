@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
-class ViewActions{
+class ViewActions {
   initState() {}
 
   dispose() {}

@@ -14,8 +14,17 @@ class DialogUtil {
     Get.dialog(AlertDialog(
       title: const Text('Cảnh báo'),
       content: Text(message),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
       actions: [
-        ElevatedButton(onPressed: Get.back, child: const Text('Xác nhận')),
+        ElevatedButton(
+          onPressed: Get.back,
+          child: const Text(
+            'Xác nhận',
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+          ),
+        ),
       ],
     ));
   }

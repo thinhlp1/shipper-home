@@ -1,5 +1,6 @@
 import 'package:base/utils/dialog_util.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GoogleMapService {
   static LocationSettings locationSettings = const LocationSettings(
@@ -46,5 +47,31 @@ class GoogleMapService {
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition(
         locationSettings: locationSettings);
+  }
+
+  /// Opens Google Maps at the specified latitude and longitude.
+  ///
+  /// This function constructs a URL to open Google Maps with the given
+  /// coordinates. If the URL can be launched, it will open Google Maps
+  /// at the specified location. If the URL cannot be launched, it will
+  /// display an alert dialog with an error message.
+  ///
+  /// [latitude] The latitude of the location to open in Google Maps.
+  /// [longitude] The longitude of the location to open in Google Maps.
+  ///
+  /// Throws an exception if the URL cannot be launched.
+  static Future<void> openGoogleMaps(double latitude, double longitude) async {
+    try {
+      final Uri url = Uri.parse(
+          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude");
+
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        DialogUtil.alertDialog('Không thể mở Google Maps');
+      }
+    } catch (e) {
+      DialogUtil.alertDialog('Đã xảy ra lỗi khi mở Google Maps');
+    }
   }
 }

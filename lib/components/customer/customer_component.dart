@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
+import 'package:base/utils/assets.dart';
 import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class CustomerComponent extends StatefulWidget {
   final void Function(int) onFavoritePressed;
   final void Function(int) onCallPressed;
   final void Function(Customer) onEditPressed;
+  final void Function(String) onMapPressed;
 
   const CustomerComponent({
     this.key,
@@ -23,6 +25,7 @@ class CustomerComponent extends StatefulWidget {
     required this.onFavoritePressed,
     required this.onCallPressed,
     required this.onEditPressed,
+    required this.onMapPressed,
   }) : super(key: key);
 
   @override
@@ -204,14 +207,33 @@ class _CustomerComponenttState
                                   onTap: () {
                                     _toggleImage();
                                   },
-                                  child: GestureDetector(
-                                    onTap: () => {
-                                      // Open map
-                                    },
-                                    child: const Text(
-                                      "Xem vị trí",
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () => {
+                                          widget.onMapPressed(customer.map),
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              customer.map != ''
+                                                  ? 'Xem trên Google Maps'
+                                                  : 'Vị trí chưa xác định',
+                                              style:
+                                                  const TextStyle(color: Colors.blue),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Image.asset(
+                                              Assets.LOGO_GOOGLE_MAPS,
+                                              width: 15,
+                                              height: 15,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )

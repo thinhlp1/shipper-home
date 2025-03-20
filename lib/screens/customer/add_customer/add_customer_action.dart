@@ -4,7 +4,9 @@ import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/third_service/google_map_service.dart';
+import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/file_util.dart';
+import 'package:base/utils/loading_util.dart';
 import 'package:base/utils/perrmission_util.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/text_field_validation.dart';
@@ -32,7 +34,11 @@ class AddCustomerAction extends ViewActions {
   final RxString addressError = ''.obs;
   final RxString mapError = ''.obs;
 
+  final RxString mapPosition = ''.obs;
+
   RxList<String?> listImage = RxList();
+
+  Position? position;
 
   /// Validates the phone number input field.
   ///
@@ -70,6 +76,7 @@ class AddCustomerAction extends ViewActions {
     noteController.text = customer.note;
     addressController.text = customer.address;
     mapController.text = customer.map;
+    mapPosition.value = customer.map;
 
     listImage.addAll(customer.imageUrl);
   }
@@ -97,7 +104,7 @@ class AddCustomerAction extends ViewActions {
         phone: phoneController.text,
         note: noteController.text,
         address: addressController.text,
-        map: '',
+        map: mapController.text,
         position: position,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -120,7 +127,6 @@ class AddCustomerAction extends ViewActions {
       // Get back before showing the notification because
       // Get.back need to be called before the snackbar
       Get.back();
-
       SnackbarUtil.showSuccessSnackbar('Thành công', 'Thêm thành công');
     }
   }
@@ -148,6 +154,7 @@ class AddCustomerAction extends ViewActions {
       customer.phone = phoneController.text;
       customer.note = noteController.text;
       customer.address = addressController.text;
+      customer.map = mapController.text;
       customer.updatedAt = DateTime.now();
 
       // Get the existing images from the customer
@@ -261,6 +268,9 @@ class AddCustomerAction extends ViewActions {
           data: ThemeData.light(),
           child: AlertDialog(
             title: const Text('Chọn hình ảnh'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -292,11 +302,40 @@ class AddCustomerAction extends ViewActions {
     return completer.future;
   }
 
-  /// Retrieves the user's current location and updates the address field.
+  /// Retrieves the current location of the user.
+  ///
+  /// This function shows a loading indicator while determining the user's
+  /// current position using the `GoogleMapService`. Once the position is
+  /// determined, it hides the loading indicator and updates the `mapPosition`
+  /// and `mapController` with the latitude and longitude of the current position.
   Future<void> getCurrentLocation() async {
-    try {
-      Position position = await GoogleMapService.determinePosition();
-      print('${position.latitude}, ${position.longitude}');
-    } catch (e) {}
+    LoadingUtil.showLoading();
+    position = await GoogleMapService.determinePosition();
+    LoadingUtil.hideLoading();
+    mapPosition.value = '${position!.latitude}, ${position!.longitude}';
+    mapController.text = mapPosition.value;
+  }
+
+  /// Opens Google Maps at the specified latitude and longitude.
+  ///
+  /// This function constructs a URL to open Google Maps with the given
+  /// coordinates. If the URL can be launched, it will open Google Maps
+  /// at the specified location. If the URL cannot be launched, it will
+  /// display an alert dialog with an error message.
+  ///
+  /// Parameters:
+  /// - mapPosition: The latitude and longitude of the location to open in Google Maps.
+  Future<void> openGoogleMaps() async {
+    if (mapPosition.value != '') {
+      List<String> coordinates = mapPosition.value.split(',');
+      double latitude = double.parse(coordinates[0].trim());
+      double longitude = double.parse(coordinates[1].trim());
+      await GoogleMapService.openGoogleMaps(
+        latitude,
+        longitude,
+      );
+    } else {
+      DialogUtil.alertDialog('Vị trí chưa xác định');
+    }
   }
 }
