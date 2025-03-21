@@ -34,6 +34,11 @@ class AddCustomerAction extends ViewActions {
   final RxString addressError = ''.obs;
   final RxString mapError = ''.obs;
 
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode nameFocusNode = FocusNode();
+  final FocusNode addressFocusNode = FocusNode();
+  final FocusNode noteFocusNode = FocusNode();
+
   final RxString mapPosition = ''.obs;
 
   RxList<String?> listImage = RxList();
@@ -57,7 +62,8 @@ class AddCustomerAction extends ViewActions {
     final phoneValidation =
         TextFieldValidation.validPhone(phoneController.text);
     if (phoneValidation != null) {
-      phoneError.value = phoneValidation;
+      DialogUtil.alertDialog(phoneValidation);
+      phoneFocusNode.requestFocus();
       isValid = false;
     } else {
       phoneError.value = '';

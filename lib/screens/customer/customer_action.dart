@@ -7,7 +7,6 @@ import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/service/database_service.dart';
 import 'package:base/third_service/google_map_service.dart';
-import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

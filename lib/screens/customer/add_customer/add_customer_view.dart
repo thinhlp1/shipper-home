@@ -53,7 +53,13 @@ class _AddCustomerViewState
                       child: Obx(
                     () => TextField(
                       controller: viewActions.phoneController,
+                      focusNode: viewActions.phoneFocusNode,
                       style: Theme.of(context).textTheme.labelMedium,
+                      textInputAction: TextInputAction.next,
+                      onSubmitted: (_) {
+                        FocusScope.of(context)
+                            .requestFocus(viewActions.nameFocusNode);
+                      },
                       decoration: InputDecoration(
                         labelText: 'Số điện thoại',
                         errorText: viewActions.phoneError.value,
@@ -99,9 +105,15 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.nameController,
+                      focusNode: viewActions.nameFocusNode,
                       style: Theme.of(context).textTheme.labelMedium,
+                      textInputAction: TextInputAction.next,
+                      onSubmitted: (_) {
+                        FocusScope.of(context)
+                            .requestFocus(viewActions.addressFocusNode);
+                      },
                       decoration: InputDecoration(
-                        labelText: 'Họ tên',
+                        labelText: 'Tên khách hàng',
                         labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
@@ -125,9 +137,7 @@ class _AddCustomerViewState
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(
-                              color:
-                                  Colors.blue), // Màu viền khi có lỗi và focus
+                          borderSide: const BorderSide(color: Colors.blue),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10.0),
@@ -141,8 +151,13 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.addressController,
+                      focusNode: viewActions.addressFocusNode,
                       style: Theme.of(context).textTheme.labelMedium,
                       maxLines: 2,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) {
+                        FocusScope.of(context).unfocus();
+                      },
                       decoration: InputDecoration(
                         labelText: 'Địa chỉ',
                         errorText: viewActions.addressError.value,
@@ -184,8 +199,13 @@ class _AddCustomerViewState
                   Expanded(
                     child: TextField(
                       controller: viewActions.noteController,
+                      focusNode: viewActions.noteFocusNode,
                       style: Theme.of(context).textTheme.labelMedium,
                       maxLines: 2,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) {
+                        FocusScope.of(context).unfocus();
+                      },
                       decoration: InputDecoration(
                         labelText: 'Ghi chú',
                         labelStyle:
@@ -226,20 +246,24 @@ class _AddCustomerViewState
                 () => Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Assets.LOGO_GOOGLE_MAPS,
-                      width: 40,
-                      height: 40,
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Image.asset(
+                        Assets.LOGO_GOOGLE_MAPS,
+                        width: 40,
+                        height: 30,
+                      ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: TextField(
                         controller: viewActions.mapController,
+                        readOnly: true,
                         style: Theme.of(context).textTheme.labelMedium,
                         maxLines: 1,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
-                          labelText: 'Tọa độ',
+                          labelText: 'Vị trí',
                           labelStyle:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontWeight: FontWeight.normal,
@@ -289,7 +313,7 @@ class _AddCustomerViewState
                       child: Row(
                         children: [
                           const Text(
-                            'Xem trên Google maps',
+                            'Xem trên Google Maps',
                             style: TextStyle(color: Colors.blue),
                             textAlign: TextAlign.center,
                           ),
@@ -325,6 +349,7 @@ class _AddCustomerViewState
                           child: Icon(
                             Icons.add_a_photo,
                             color: HexColor.fromHex(ThemeColors.PRIMARY),
+                            size: 35,
                           ),
                         ),
                       );

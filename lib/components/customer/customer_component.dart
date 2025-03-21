@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:base/components/customer/important_button.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/assets.dart';
@@ -147,6 +148,7 @@ class _CustomerComponenttState
         mainAxisSize: MainAxisSize.min, //  Auto size depend on children
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: _toggleSize,
             child: Row(
               children: [
@@ -158,98 +160,87 @@ class _CustomerComponenttState
                       Row(
                         children: [
                           Expanded(
-                            child: Text(customer.name ?? "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis),
+                            child: Row(
+                              children: [
+                                Text(
+                                    customer.name != null && customer.name != ''
+                                        ? customer.name!
+                                        : customer.phone,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.ellipsis),
+                                const SizedBox(width: 8),
+                              ],
+                            ),
                           ),
-                          const SizedBox(width: 8),
-                          if (customer.isFavorite)
-                            Icon(Icons.star,
-                                color: Colors.yellowAccent.shade700, size: 20),
-                          Expanded(
-                              child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(Utils.formatDate(customer.createdAt),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(
-                                        color: Colors.grey,
-                                        fontStyle: FontStyle.italic)),
-                          )),
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Text(customer.phone,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(fontWeight: FontWeight.bold)),
+                      if (customer.name != '')
+                        Text(customer.phone,
+                            style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 4),
                       Text(customer.address,
                           style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 4),
-                      Text('Note: ${customer.note}',
-                          style: Theme.of(context).textTheme.labelSmall),
+                      if (customer.note != '')
+                        Text('Note: ${customer.note}',
+                            style: Theme.of(context).textTheme.labelSmall),
 
                       /// Show images text slowly when click
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        child: _toggle
-                            ? AnimatedOpacity(
-                                opacity: _toggle ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 300),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _toggleImage();
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () => {
-                                          widget.onMapPressed(customer.map),
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              customer.map != ''
-                                                  ? 'Xem trên Google Maps'
-                                                  : 'Vị trí chưa xác định',
-                                              style:
-                                                  const TextStyle(color: Colors.blue),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Image.asset(
-                                              Assets.LOGO_GOOGLE_MAPS,
-                                              width: 15,
-                                              height: 15,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ),
+                      // AnimatedSize(
+                      //   duration: const Duration(milliseconds: 300),
+                      //   curve: Curves.easeInOut,
+                      //   child: _toggle
+                      //       ? AnimatedOpacity(
+                      //           opacity: _toggle ? 1.0 : 0.0,
+                      //           duration: const Duration(milliseconds: 300),
+                      //           child: GestureDetector(
+                      //             onTap: () {
+                      //               _toggleImage();
+                      //             },
+                      //             child: Row(
+                      //               mainAxisAlignment: MainAxisAlignment.start,
+                      //               children: [
+                      //                 GestureDetector(
+                      //                   onTap: () => {
+                      //                     widget.onMapPressed(customer.map),
+                      //                   },
+                      //                   child: Row(
+                      //                     children: [
+                      //                       Text(
+                      //                         customer.map != ''
+                      //                             ? 'Xem trên Google Maps'
+                      //                             : 'Vị trí chưa xác định',
+                      //                         style: const TextStyle(
+                      //                             color: Colors.blue),
+                      //                         textAlign: TextAlign.center,
+                      //                       ),
+                      //                       const SizedBox(width: 5),
+                      //                       Image.asset(
+                      //                         Assets.LOGO_GOOGLE_MAPS,
+                      //                         width: 15,
+                      //                         height: 15,
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         )
+                      //       : const SizedBox.shrink(),
+                      // ),
                     ],
                   ),
                 ),
-                AnimatedRotation(
-                  turns: _toggle ? 0.5 : 0.0,
-                  duration: const Duration(milliseconds: 300),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.keyboard_arrow_up, color: Colors.grey),
-                  ),
-                )
+                FavoriteButton(
+                    isFavorite: customer.isFavorite,
+                    onFavoritePressed: () {
+                      widget.onFavoritePressed(customer.id!);
+                    }),
               ],
             ),
           ),
@@ -336,16 +327,27 @@ class _CustomerComponenttState
                         Column(
                           children: [
                             IconButton(
-                                onPressed: () => {
-                                      widget.onFavoritePressed(customer.id!),
-                                    },
-                                padding: const EdgeInsets.all(20),
-                                iconSize: 25,
-                                color: Colors.yellowAccent.shade700,
-                                icon: customer.isFavorite
-                                    ? const Icon(Icons.star)
-                                    : const Icon(Icons.star_border)),
-                            Text("Quan trọng",
+                              onPressed: () => {
+                                widget.onMapPressed(customer.map),
+                              },
+                              padding: const EdgeInsets.all(20),
+                              iconSize: 25,
+                              color: Colors.yellowAccent.shade700,
+                              icon: customer.map != ''
+                                  ? Image.asset(
+                                      Assets.LOGO_GOOGLE_MAPS,
+                                      width: 25,
+                                      height: 25,
+                                    )
+                                  : Image.asset(
+                                      Assets.LOGO_GOOGLE_MAPS,
+                                      width: 25,
+                                      height: 25,
+                                      color: Colors.grey,
+                                    ),
+                            ),
+                            Text(
+                                customer.map != '' ? 'Bản đồ' : 'Chưa xác định',
                                 style: Theme.of(context).textTheme.labelSmall!),
                           ],
                         ),

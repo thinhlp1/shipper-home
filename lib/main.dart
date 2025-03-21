@@ -162,21 +162,22 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
-          titleTextStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: "Medium",
-            fontWeight: FontWeight.bold,
-          ),
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
-          shadowColor: Colors.black,
-
-          // THIS IS BASE PROP
-          // elevation: 10,
-        ),
+            backgroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
+            titleTextStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontFamily: "Medium",
+              fontWeight: FontWeight.bold,
+            ),
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            ),
+            shadowColor: Colors.black,
+            elevation: 0,
+            scrolledUnderElevation: 0
+            // THIS IS BASE PROP
+            // elevation: 10,
+            ),
       ),
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),

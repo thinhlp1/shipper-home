@@ -86,12 +86,14 @@ class PermissionUtil {
   ///
   /// This function uses the `DeviceInfoPlugin` to retrieve information about the
   /// Android device. It parses the Android version from the device info and compares
-  /// it to a minimum required version defined in `Constants.minAndroidVersion`.
+  /// it to a minimum required 12.
   ///
   /// Returns `true` if the Android version is greater than the minimum required version,
   /// otherwise returns `false`. If an error occurs while retrieving the device info,
   /// it shows an alert dialog with the message "Không thể xác định phiên bản Android"
   /// (Cannot determine Android version) and returns `false`.
+  /// 
+  /// 12 is version dont need permission
   ///
   /// Throws:
   /// - `Exception` if there is an error while retrieving the device info.
@@ -110,7 +112,7 @@ class PermissionUtil {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       int androidVersion = int.parse(androidInfo.version.release);
-      return androidVersion > Constants.minAndroidVersion;
+      return androidVersion > 12;
     } catch (e) {
       return false;
     }

@@ -44,6 +44,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             viewActions.searchController.value,
             TextFieldValidation.validName,
           ),
+          const SizedBox(height: 10),
           Expanded(
             child: ReorderableListView.builder(
               shrinkWrap: true,
@@ -202,6 +203,8 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             .labelSmall!
             .copyWith(color: Colors.black),
         validator: validator,
+        onTapOutside: (event) =>
+            {FocusManager.instance.primaryFocus?.unfocus()},
         onFieldSubmitted: (value) {
           viewActions.searchCustomer(value);
         },
