@@ -4,7 +4,6 @@ import 'package:base/components/customer/important_button.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/assets.dart';
-import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'customer_component_action.dart';
@@ -44,16 +43,7 @@ class _CustomerComponenttState
   final double _defaultImageWidth = 100.0;
 
   bool _toggle = false;
-  bool _isToggleImage = false;
   bool _showImages = false;
-
-  /// Toggle image show/hide
-  void _toggleImage() {
-    setState(() {
-      _showImages = !_showImages;
-      _isToggleImage = !_isToggleImage;
-    });
-  }
 
   /// Toggle size of container
   void _toggleSize() {
@@ -188,51 +178,6 @@ class _CustomerComponenttState
                       if (customer.note != '')
                         Text('Note: ${customer.note}',
                             style: Theme.of(context).textTheme.labelSmall),
-
-                      /// Show images text slowly when click
-                      // AnimatedSize(
-                      //   duration: const Duration(milliseconds: 300),
-                      //   curve: Curves.easeInOut,
-                      //   child: _toggle
-                      //       ? AnimatedOpacity(
-                      //           opacity: _toggle ? 1.0 : 0.0,
-                      //           duration: const Duration(milliseconds: 300),
-                      //           child: GestureDetector(
-                      //             onTap: () {
-                      //               _toggleImage();
-                      //             },
-                      //             child: Row(
-                      //               mainAxisAlignment: MainAxisAlignment.start,
-                      //               children: [
-                      //                 GestureDetector(
-                      //                   onTap: () => {
-                      //                     widget.onMapPressed(customer.map),
-                      //                   },
-                      //                   child: Row(
-                      //                     children: [
-                      //                       Text(
-                      //                         customer.map != ''
-                      //                             ? 'Xem trên Google Maps'
-                      //                             : 'Vị trí chưa xác định',
-                      //                         style: const TextStyle(
-                      //                             color: Colors.blue),
-                      //                         textAlign: TextAlign.center,
-                      //                       ),
-                      //                       const SizedBox(width: 5),
-                      //                       Image.asset(
-                      //                         Assets.LOGO_GOOGLE_MAPS,
-                      //                         width: 15,
-                      //                         height: 15,
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         )
-                      //       : const SizedBox.shrink(),
-                      // ),
                     ],
                   ),
                 ),

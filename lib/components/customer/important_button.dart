@@ -13,10 +13,10 @@ class FavoriteButton extends StatefulWidget {
   });
 
   @override
-  _FavoriteButtonState createState() => _FavoriteButtonState();
+  FavoriteButtonState createState() => FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<FavoriteButton>
+class FavoriteButtonState extends State<FavoriteButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final AudioPlayer _audioPlayer = AudioPlayer();

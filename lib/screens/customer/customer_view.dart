@@ -86,7 +86,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                 viewActions.reorderCustomer(oldIndex, newIndex);
               },
             ),
-          ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

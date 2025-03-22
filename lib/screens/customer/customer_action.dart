@@ -64,12 +64,41 @@ class CustomerAction extends ViewActions {
       }
     }
 
+    // Find the index of the last favorite customer and the current customer
+    int lastFavoriteIndex =
+        listCustomer.lastIndexWhere((customer) => customer.isFavorite) + 1;
+
+    final currentIndex = listCustomer.indexWhere((element) => element.id == id);
+
+    // this adjustment is needed when moving down the list
+    if (currentIndex < lastFavoriteIndex) {
+      lastFavoriteIndex -= 1;
+    }
     // Update favorite status in original and filtered lists
     updateFavoriteStatus(filteredCustomer);
     updateFavoriteStatus(listCustomer);
 
     // Update database
     _customerService.updateIsFavorite(id, isFavorite);
+
+    // remove the tile from the old position
+    final Customer customer = listCustomer.removeAt(currentIndex);
+    // place the tile in new position
+    listCustomer.insert(lastFavoriteIndex, customer);
+
+    // Reorder the list after moving favorites to the beginning
+    // Update positions in the list
+    for (int i = 0; i < listCustomer.length; i++) {
+      listCustomer[i].position = i + 1;
+    }
+
+    // If list not filtered, update the filtered list
+    if (filteredCustomer.length == listCustomer.length) {
+      filteredCustomer.assignAll(listCustomer);
+    }
+
+    // Update positions in the database
+    _customerService.updateCustomerPositions(listCustomer);
   }
 
   /// Reorders the list of customers by moving a customer from the old index to the new index.
@@ -117,6 +146,16 @@ class CustomerAction extends ViewActions {
     }
 
     filteredCustomer.assignAll(listCustomer);
+
+    // Update positions in the database
+    _customerService.updateCustomerPositions(listCustomer);
+  }
+
+  void orderListCustomer() {
+    // Update positions in the list
+    for (int i = 0; i < listCustomer.length; i++) {
+      listCustomer[i].position = i + 1;
+    }
 
     // Update positions in the database
     _customerService.updateCustomerPositions(listCustomer);
