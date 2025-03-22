@@ -1,9 +1,11 @@
+import 'package:base/components/contact/contact_component.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/screens/contact/contact_action.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../utils/utils.dart';
 
@@ -40,16 +42,35 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
               TextFieldValidation.validName,
             ),
             const SizedBox(height: 10),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: viewActions.contacts.length,
-              itemBuilder: (context, index) {
-                final contact = viewActions.contacts[index];
-                return ListTile(
-                  title: Text(contact.displayName),
-                  subtitle: Text(contact.phones.first.number),
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                shrinkWrap: true,
+                itemCount: viewActions.contacts.length,
+                itemBuilder: (context, index) {
+                  final contact = viewActions.contacts[index];
+                  return Slidable(
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      dismissible: DismissiblePane(onDismissed: () {}),
+                      children: [
+                        SlidableAction(
+                          foregroundColor:
+                              HexColor.fromHex(ThemeColors.PRIMARY),
+                          icon: Icons.delete,
+                          spacing: 2,
+                          label: 'Xóa',
+                          onPressed: (BuildContext context) {},
+                        ),
+                      ],
+                    ),
+                    key: ValueKey(contact.id),
+                    child: ContactComponent(
+                      contact: contact,
+                    ),
+                  );
+                },
+              ),
             )
           ],
         ));

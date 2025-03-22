@@ -22,8 +22,7 @@ class ContactAction extends ViewActions {
 
   Future<void> fetchContacts() async {
     if (await PermissionUtil.checkContactPermissions()) {
-      final List<Contact> fetchedContacts = await FlutterContacts.getContacts();
-      print(fetchedContacts.length);
+      final List<Contact> fetchedContacts = await FlutterContacts.getContacts(withProperties: true);
       contacts.assignAll(fetchedContacts);
     } else {
       DialogUtil.alertDialog(
