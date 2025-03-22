@@ -164,7 +164,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
   void _goToAddCustomer() {
     // viewActions.resetDatabase();
     Get.to(() => AddCustomerView(
-              position: viewActions.listCustomer.length + 1,
+              position: viewActions.customers.length + 1,
             ))!
         .then((_) {
       viewActions.loadListContacts();

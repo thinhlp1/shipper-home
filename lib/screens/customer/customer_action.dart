@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomerAction extends ViewActions {
-  RxList<Customer> listCustomer = <Customer>[].obs;
+  RxList<Customer> customers = <Customer>[].obs;
   RxList<Customer> filteredCustomer = <Customer>[].obs;
 
   Rxn<TextEditingController> searchController = Rxn(TextEditingController());
@@ -33,15 +33,14 @@ class CustomerAction extends ViewActions {
   /// Load list of customers
   /// @return void
   Future<void> loadListContacts() async {
-    listCustomer.value =
-        (await _customerService.getCustomers()).cast<Customer>();
-    filteredCustomer.assignAll(listCustomer);
+    customers.value = (await _customerService.getCustomers()).cast<Customer>();
+    filteredCustomer.assignAll(customers);
   }
 
   /// Load the last customer added
   /// @return void
   void addCustomerLastInsert() async {
-    listCustomer.insert(0, (await _customerService.getCustomers()).first);
+    customers.insert(0, (await _customerService.getCustomers()).first);
   }
 
   /// Updates the favorite status of a customer.
@@ -56,19 +55,19 @@ class CustomerAction extends ViewActions {
   ///   - isFavorite: A boolean value indicating whether the customer is a favorite.
   void updateIsFavorite(int id, bool isFavorite) {
     // Function to update the favorite status in a list
-    void updateFavoriteStatus(RxList<Customer> customers) {
-      final index = customers.indexWhere((element) => element.id == id);
+    void updateFavoriteStatus(RxList<Customer> customerss) {
+      final index = customerss.indexWhere((element) => element.id == id);
       if (index != -1) {
-        customers[index].isFavorite = isFavorite;
-        customers.refresh(); // Notify the UI to update
+        customerss[index].isFavorite = isFavorite;
+        customerss.refresh(); // Notify the UI to update
       }
     }
 
     // Find the index of the last favorite customer and the current customer
     int lastFavoriteIndex =
-        listCustomer.lastIndexWhere((customer) => customer.isFavorite) + 1;
+        customers.lastIndexWhere((customer) => customer.isFavorite) + 1;
 
-    final currentIndex = listCustomer.indexWhere((element) => element.id == id);
+    final currentIndex = customers.indexWhere((element) => element.id == id);
 
     // this adjustment is needed when moving down the list
     if (currentIndex < lastFavoriteIndex) {
@@ -76,29 +75,29 @@ class CustomerAction extends ViewActions {
     }
     // Update favorite status in original and filtered lists
     updateFavoriteStatus(filteredCustomer);
-    updateFavoriteStatus(listCustomer);
+    updateFavoriteStatus(customers);
 
     // Update database
     _customerService.updateIsFavorite(id, isFavorite);
 
     // remove the tile from the old position
-    final Customer customer = listCustomer.removeAt(currentIndex);
+    final Customer customer = customers.removeAt(currentIndex);
     // place the tile in new position
-    listCustomer.insert(lastFavoriteIndex, customer);
+    customers.insert(lastFavoriteIndex, customer);
 
     // Reorder the list after moving favorites to the beginning
     // Update positions in the list
-    for (int i = 0; i < listCustomer.length; i++) {
-      listCustomer[i].position = i + 1;
+    for (int i = 0; i < customers.length; i++) {
+      customers[i].position = i + 1;
     }
 
     // If list not filtered, update the filtered list
-    if (filteredCustomer.length == listCustomer.length) {
-      filteredCustomer.assignAll(listCustomer);
+    if (filteredCustomer.length == customers.length) {
+      filteredCustomer.assignAll(customers);
     }
 
     // Update positions in the database
-    _customerService.updateCustomerPositions(listCustomer);
+    _customerService.updateCustomerPositions(customers);
   }
 
   /// Reorders the list of customers by moving a customer from the old index to the new index.
@@ -119,46 +118,46 @@ class CustomerAction extends ViewActions {
     }
 
     // If the list is filtered, reorder without saving the position
-    if (filteredCustomer.length != listCustomer.length) {
+    if (filteredCustomer.length != customers.length) {
       SnackbarUtil.showWarningSnackbar(
           'Không thể sắp xếp', 'Hủy bộ lọc để sắp xếp');
       return;
     }
 
     // get the tile we are moving
-    final Customer customer = listCustomer.removeAt(oldIndex);
+    final Customer customer = customers.removeAt(oldIndex);
     // place the tile in new position
-    listCustomer.insert(newIndex, customer);
+    customers.insert(newIndex, customer);
 
     // Move isFavorite customers to the beginning of the list
     final favoriteCustomers =
-        listCustomer.where((customer) => customer.isFavorite).toList();
+        customers.where((customer) => customer.isFavorite).toList();
     final nonFavoriteCustomers =
-        listCustomer.where((customer) => !customer.isFavorite).toList();
-    listCustomer
+        customers.where((customer) => !customer.isFavorite).toList();
+    customers
       ..clear()
       ..addAll(favoriteCustomers)
       ..addAll(nonFavoriteCustomers);
 
     // Update positions in the list
-    for (int i = 0; i < listCustomer.length; i++) {
-      listCustomer[i].position = i + 1;
+    for (int i = 0; i < customers.length; i++) {
+      customers[i].position = i + 1;
     }
 
-    filteredCustomer.assignAll(listCustomer);
+    filteredCustomer.assignAll(customers);
 
     // Update positions in the database
-    _customerService.updateCustomerPositions(listCustomer);
+    _customerService.updateCustomerPositions(customers);
   }
 
-  void orderListCustomer() {
+  void ordercustomers() {
     // Update positions in the list
-    for (int i = 0; i < listCustomer.length; i++) {
-      listCustomer[i].position = i + 1;
+    for (int i = 0; i < customers.length; i++) {
+      customers[i].position = i + 1;
     }
 
     // Update positions in the database
-    _customerService.updateCustomerPositions(listCustomer);
+    _customerService.updateCustomerPositions(customers);
   }
 
   /// Reset the database
@@ -176,9 +175,9 @@ class CustomerAction extends ViewActions {
   /// - Parameter keyword: The search keyword used to filter the customer list.
   void searchCustomer(String keyword) {
     if (keyword.isEmpty) {
-      filteredCustomer.assignAll(listCustomer);
+      filteredCustomer.assignAll(customers);
     } else {
-      filteredCustomer.value = listCustomer.where((customer) {
+      filteredCustomer.value = customers.where((customer) {
         return customer.name!.toLowerCase().contains(keyword.toLowerCase()) ||
             customer.phone.contains(keyword) ||
             customer.address.toLowerCase().contains(keyword.toLowerCase());
@@ -204,7 +203,7 @@ class CustomerAction extends ViewActions {
   /// - id: The unique identifier of the customer to be deleted.
   void deleteCustomer(int id) {
     _customerService.deleteCustomer(id);
-    listCustomer.removeWhere((element) => element.id == id);
+    customers.removeWhere((element) => element.id == id);
     filteredCustomer.removeWhere((element) => element.id == id);
 
     Get.back();
@@ -234,7 +233,7 @@ class CustomerAction extends ViewActions {
 
   void callCustomer(int id) {
     print("Call customer with id: $id");
-    final customer = listCustomer.firstWhere((element) => element.id == id);
+    final customer = customers.firstWhere((element) => element.id == id);
     print("Call to: ${customer.phone}");
   }
 
