@@ -44,6 +44,22 @@ class PermissionUtil {
     }
   }
 
+  /// Checks the current contact permissions status.
+  ///
+  /// If the contact permission is already granted, it returns `true`.
+  /// Otherwise, it requests the contact permission and returns the result.
+  ///
+  /// Returns a [Future] that completes with `true` if the contact permission
+  /// is granted, and `false` otherwise.
+  static Future<bool> checkContactPermissions() async {
+    PermissionStatus contactStatus = await Permission.contacts.status;
+    if (contactStatus.isGranted) {
+      return true;
+    } else {
+      return await requestContactPermissions();
+    }
+  }
+
   /// Requests storage permissions from the user.
   ///
   /// This function uses the `permission_handler` package to request storage
@@ -74,6 +90,21 @@ class PermissionUtil {
     return statuses[Permission.camera]?.isGranted ?? false;
   }
 
+  /// Requests contact permissions from the user.
+  ///
+  /// This function uses the `permission_handler` package to request contact
+  /// permissions. It returns a `Future<bool>` indicating whether the cotnact
+  /// permissions were granted (`true`) or not (`false`).
+  ///
+  /// Returns:
+  /// - `Future<bool>`: A future that resolves to `true` if the cotnact
+  ///   permissions were granted, otherwise `false`.
+  static Future<bool> requestContactPermissions() async {
+    Map<Permission, PermissionStatus> statuses =
+        await [Permission.contacts].request();
+    return statuses[Permission.contacts]?.isGranted ?? false;
+  }
+
   /// Checks if the current platform is Android.
   ///
   /// Returns `true` if the platform is Android, otherwise `false`.
@@ -91,7 +122,7 @@ class PermissionUtil {
   /// otherwise returns `false`. If an error occurs while retrieving the device info,
   /// it shows an alert dialog with the message "Không thể xác định phiên bản Android"
   /// (Cannot determine Android version) and returns `false`.
-  /// 
+  ///
   /// 12 is version dont need permission
   ///
   /// Throws:

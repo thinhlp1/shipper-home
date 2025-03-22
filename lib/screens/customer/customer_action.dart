@@ -27,12 +27,12 @@ class CustomerAction extends ViewActions {
   }
 
   Future<void> loadData() async {
-    await loadListContacts();
+    await fetchCustomers();
   }
 
   /// Load list of customers
   /// @return void
-  Future<void> loadListContacts() async {
+  Future<void> fetchCustomers() async {
     customers.value = (await _customerService.getCustomers()).cast<Customer>();
     filteredCustomer.assignAll(customers);
   }

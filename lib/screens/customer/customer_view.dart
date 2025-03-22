@@ -167,7 +167,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
               position: viewActions.customers.length + 1,
             ))!
         .then((_) {
-      viewActions.loadListContacts();
+      viewActions.fetchCustomers();
     });
   }
 
@@ -182,7 +182,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
               customer: customer,
             ))!
         .then((_) {
-      viewActions.loadListContacts();
+      viewActions.fetchCustomers();
     });
   }
 

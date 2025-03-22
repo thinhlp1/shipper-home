@@ -40,6 +40,17 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
               TextFieldValidation.validName,
             ),
             const SizedBox(height: 10),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: viewActions.contacts.length,
+              itemBuilder: (context, index) {
+                final contact = viewActions.contacts[index];
+                return ListTile(
+                  title: Text(contact.displayName),
+                  subtitle: Text(contact.phones.first.number),
+                );
+              },
+            )
           ],
         ));
   }
