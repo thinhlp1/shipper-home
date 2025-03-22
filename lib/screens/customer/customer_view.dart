@@ -212,6 +212,16 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
           hintText: title,
           prefixIcon: Icon(Icons.search,
               color: HexColor.fromHex(ThemeColors.SECONDARY)),
+          suffixIcon: textEditingController!.text.isNotEmpty
+              ? IconButton(
+                  icon: Icon(Icons.clear,
+                      color: HexColor.fromHex(ThemeColors.SECONDARY)),
+                  onPressed: () {
+                    textEditingController.clear();
+                    viewActions.searchCustomer('');
+                  },
+                )
+              : null,
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),

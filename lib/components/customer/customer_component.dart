@@ -170,11 +170,16 @@ class _CustomerComponenttState
                       const SizedBox(height: 4),
                       if (customer.name != '')
                         Text(customer.phone,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(fontWeight: FontWeight.bold)),
+                      if (customer.note.isEmpty && customer.address.isEmpty)
+                        Text('Chưa cập nhật',
                             style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 4),
                       Text(customer.address,
                           style: Theme.of(context).textTheme.labelSmall),
-                      const SizedBox(height: 4),
                       if (customer.note != '')
                         Text('Note: ${customer.note}',
                             style: Theme.of(context).textTheme.labelSmall),

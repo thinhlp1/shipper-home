@@ -66,10 +66,18 @@ class _AddCustomerViewState
                         labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
+                                  color: Colors.grey,
                                 ),
                         prefixIcon: Icon(
                           Icons.phone,
                           color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear,
+                              color: HexColor.fromHex(ThemeColors.SECONDARY)),
+                          onPressed: () {
+                            viewActions.phoneController.clear();
+                          },
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4.0),
@@ -117,6 +125,7 @@ class _AddCustomerViewState
                         labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
+                                  color: Colors.grey,
                                 ),
                         errorText: viewActions.nameError.value,
                         prefixIcon: Icon(
@@ -164,6 +173,7 @@ class _AddCustomerViewState
                         labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
+                                  color: Colors.grey,
                                 ),
                         prefixIcon: Icon(
                           Icons.map,
@@ -211,6 +221,7 @@ class _AddCustomerViewState
                         labelStyle:
                             Theme.of(context).textTheme.labelMedium!.copyWith(
                                   fontWeight: FontWeight.normal,
+                                  color: Colors.grey,
                                 ),
                         errorText: viewActions.noteError.value,
                         prefixIcon: Icon(
@@ -267,6 +278,7 @@ class _AddCustomerViewState
                           labelStyle:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontWeight: FontWeight.normal,
+                                    color: Colors.grey,
                                   ),
                           suffixIcon: GestureDetector(
                             onTap: viewActions.getCurrentLocation,
