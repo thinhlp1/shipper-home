@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/hex_color.dart';
 import '../../utils/theme_color.dart';
-import 'Actions.dart';
+import 'actions.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,8 +18,9 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
   @override
   Widget render(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: viewActions.views[context.watch<GlobalStore>().tabIndex],
+      body: IndexedStack(
+        index: context.watch<GlobalStore>().tabIndex,
+        children: viewActions.views,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,

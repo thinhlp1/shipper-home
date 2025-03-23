@@ -1,4 +1,5 @@
 import 'package:base/components/customer/customer_component.dart';
+import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
@@ -8,6 +9,7 @@ import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/utils.dart';
 import 'customer_action.dart';
@@ -41,6 +43,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         children: [
           _buildTextFormFied(
             "Tìm kiếm khách hàng",
+            context.watch<GlobalStore>().searchText,
             viewActions.searchController.value,
             TextFieldValidation.validName,
           ),
@@ -59,7 +62,9 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                     children: [
                       SlidableAction(
                         foregroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
+                        borderRadius: BorderRadius.circular(10),
                         icon: Icons.delete,
+                        autoClose: true,
                         spacing: 2,
                         label: 'Xóa',
                         onPressed: (BuildContext context) {
@@ -188,9 +193,14 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
 
   Widget _buildTextFormFied(
     String title,
+    String initialValue,
     TextEditingController? textEditingController,
     FormFieldValidator<String>? validator,
   ) {
+    if (initialValue.isNotEmpty) {
+      textEditingController!.text = initialValue;
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: const BoxDecoration(
@@ -218,6 +228,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                       color: HexColor.fromHex(ThemeColors.SECONDARY)),
                   onPressed: () {
                     textEditingController.clear();
+                    context.read<GlobalStore>().clearSearchText();
                     viewActions.searchCustomer('');
                   },
                 )

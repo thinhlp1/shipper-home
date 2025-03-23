@@ -48,7 +48,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                 shrinkWrap: true,
                 itemCount: viewActions.contacts.length,
                 itemBuilder: (context, index) {
-                  final contact = viewActions.contacts[index];
+                  final contact = viewActions.contacts[index].contact;
                   return Slidable(
                     endActionPane: ActionPane(
                       motion: const ScrollMotion(),
@@ -57,7 +57,9 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                         SlidableAction(
                           foregroundColor:
                               HexColor.fromHex(ThemeColors.PRIMARY),
+                          borderRadius: BorderRadius.circular(10),
                           icon: Icons.delete,
+                          autoClose: true,
                           spacing: 2,
                           label: 'Xóa',
                           onPressed: (BuildContext context) {},
@@ -66,7 +68,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                     ),
                     key: ValueKey(contact.id),
                     child: ContactComponent(
-                      contact: contact,
+                      userContact: viewActions.contacts[index],
                     ),
                   );
                 },

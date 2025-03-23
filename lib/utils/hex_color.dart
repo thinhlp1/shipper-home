@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 extension HexColor on Color {
   static Color fromHex(String hexString) {
@@ -13,4 +13,14 @@ extension HexColor on Color {
       '${red.toRadixString(16).padLeft(2, '0')}'
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
+
+  static LinearGradient getColorGradient(Color color) {
+    var baseColor = color as dynamic;
+    Color color1 = baseColor[800];
+    Color color2 = baseColor[400];
+    return LinearGradient(colors: [
+      color1,
+      color2,
+    ], begin: Alignment.bottomLeft, end: Alignment.topRight);
+  }
 }

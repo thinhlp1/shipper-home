@@ -8,7 +8,11 @@ class GlobalStore with ChangeNotifier {
   GlobalStore(this._client);
 
   int _tabIndex = 0;
+  String _searchText = '';
+
   int get tabIndex => _tabIndex;
+  String get searchText => _searchText;
+
   void handleChangeViews(int i) {
     _tabIndex = i;
     notifyListeners();
@@ -21,6 +25,14 @@ class GlobalStore with ChangeNotifier {
     notifyListeners();
   }
 
-  final int _shoppingCart = 100;
-  int get shoppingCart => _shoppingCart;
+  void switchToCustomerTabAndSearch(String searchText) {
+    _tabIndex = 0;
+    _searchText = searchText;
+    notifyListeners();
+  }
+
+  void clearSearchText() {
+    _searchText = '';
+    notifyListeners();
+  }
 }

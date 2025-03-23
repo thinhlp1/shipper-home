@@ -1,8 +1,16 @@
-class UserContact {
-  String? id;
-  String? name;
-  String? imageUrl;
-  String? phone;
+import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 
-  UserContact({this.id, this.name, this.imageUrl, this.phone});
+class UserContact {
+  final Color color;
+  Contact contact;
+  int? customerId;
+  bool isCustomer = false;
+
+  UserContact({
+    required this.color,
+    required this.contact,
+    required this.customerId,
+    this.isCustomer = false,
+  });
 }
