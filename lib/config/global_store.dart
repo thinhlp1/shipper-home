@@ -9,9 +9,11 @@ class GlobalStore with ChangeNotifier {
 
   int _tabIndex = 0;
   String _searchText = '';
+  bool _shouldFetchCustomer = false;
 
   int get tabIndex => _tabIndex;
   String get searchText => _searchText;
+  bool get shouldFetchCustomer => _shouldFetchCustomer;
 
   void handleChangeViews(int i) {
     _tabIndex = i;
@@ -33,6 +35,11 @@ class GlobalStore with ChangeNotifier {
 
   void clearSearchText() {
     _searchText = '';
+    notifyListeners();
+  }
+
+  void setShouldFetchCustomer(bool status) {
+    _shouldFetchCustomer = status;
     notifyListeners();
   }
 }

@@ -15,7 +15,7 @@ class ContactComponent extends StatefulWidget {
   final Key? key;
   final UserContact userContact;
 
-  // final void Function(int) onFavoritePressed;
+  final void Function(String name, String phone) onAddCustomerPressed;
   // final void Function(int) onCallPressed;
   // final void Function(Contact) onEditPressed;
   // final void Function(String) onMapPressed;
@@ -23,7 +23,7 @@ class ContactComponent extends StatefulWidget {
   const ContactComponent({
     this.key,
     required this.userContact,
-    // required this.onFavoritePressed,
+    required this.onAddCustomerPressed,
     // required this.onCallPressed,
     // required this.onEditPressed,
     // required this.onMapPressed,
@@ -184,7 +184,14 @@ class _ContactComponenttState
                                 : Column(
                                     children: [
                                       IconButton(
-                                          onPressed: () => {},
+                                          onPressed: () => {
+                                                widget.onAddCustomerPressed(
+                                                    contact.displayName,
+                                                    contact.phones.isNotEmpty
+                                                        ? contact
+                                                            .phones.first.number
+                                                        : ''),
+                                              },
                                           padding: const EdgeInsets.all(20),
                                           iconSize: 25,
                                           color: Colors.green,

@@ -71,6 +71,9 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                           key: ValueKey(contact.id),
                           child: ContactComponent(
                             userContact: viewActions.filteredContacts[index],
+                            onAddCustomerPressed: (name, phone) {
+                              viewActions.goToAddCustomer(name, phone);
+                            },
                           ),
                         );
                       },

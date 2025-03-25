@@ -108,9 +108,9 @@ class CustomerAction extends ViewActions {
   ///
   /// If the list is filtered, the function reorders the filtered list without saving the position.
   ///
-  /// @param oldIndex The current index of the customer to be moved.
-  /// @param newIndex The target index where the customer should be moved.
-  /// @return void
+  /// - Parameters:
+  ///  - oldIndex: The original index of the customer in the list.
+  /// - newIndex: The new index of the customer in the list.
   void reorderCustomer(int oldIndex, int newIndex) {
     // this adjustment is needed when moving down the list
     if (oldIndex < newIndex) {
@@ -172,7 +172,8 @@ class CustomerAction extends ViewActions {
   /// Otherwise, it filters the customer list to include only those customers whose name, phone,
   /// or address contains the keyword.
   ///
-  /// - Parameter keyword: The search keyword used to filter the customer list.
+  /// Parameters:
+  /// - keyword: The search keyword to filter the customers.
   void searchCustomer(String keyword) {
     if (keyword.isEmpty) {
       filteredCustomer.assignAll(customers);

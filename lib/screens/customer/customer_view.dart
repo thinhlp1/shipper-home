@@ -7,6 +7,7 @@ import 'package:base/screens/customer/add_customer/add_customer_view.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,14 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
   @override
   Widget render(BuildContext context) {
     Utils.initCustomerSize();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (Get.find<GlobalStore>().shouldFetchCustomer) {
+        print("fetch golobal store");
+        viewActions.fetchCustomers();
+        Get.find<GlobalStore>().setShouldFetchCustomer(false);
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -95,6 +104,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'addCustomer',
         onPressed: _goToAddCustomer,
         backgroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
         shape: const CircleBorder(),
@@ -171,8 +181,10 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
     Get.to(() => AddCustomerView(
               position: viewActions.customers.length + 1,
             ))!
-        .then((_) {
-      viewActions.fetchCustomers();
+        .then((result) {
+      if (result != null) {
+        viewActions.fetchCustomers();
+      }
     });
   }
 
@@ -228,7 +240,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                       color: HexColor.fromHex(ThemeColors.SECONDARY)),
                   onPressed: () {
                     textEditingController.clear();
-                    context.read<GlobalStore>().clearSearchText();
+                      Get.find<GlobalStore>().clearSearchText();
                     viewActions.searchCustomer('');
                   },
                 )

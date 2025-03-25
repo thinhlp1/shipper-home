@@ -26,7 +26,7 @@ void main() async {
   await configureDependencies();
   runApp(
     ChangeNotifierProvider(
-      create: (_) => GlobalStore(getIt<Client>()),
+      create: (_) => Get.put(GlobalStore(getIt<Client>())),
       child: const MyApp(),
     ),
   );

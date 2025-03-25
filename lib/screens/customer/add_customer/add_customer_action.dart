@@ -130,9 +130,9 @@ class AddCustomerAction extends ViewActions {
       }
 
       // Show success notification
-      // Get back before showing the notification because
-      // Get.back need to be called before the snackbar
-      Get.back();
+      //
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context, true);
       SnackbarUtil.showSuccessSnackbar('Thành công', 'Thêm thành công');
     }
   }
@@ -195,7 +195,8 @@ class AddCustomerAction extends ViewActions {
 
       await _customerService.updateCustomer(customer.id!, customer);
 
-      Get.back();
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context, true);
       SnackbarUtil.showSuccessSnackbar('Thành công', 'Cập nhật thành công');
     }
   }

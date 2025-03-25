@@ -12,8 +12,13 @@ import 'add_customer_action.dart';
 class AddCustomerView extends StatefulWidget {
   final int position;
   final Customer? customer;
+  final bool isAddFromContact;
 
-  const AddCustomerView({super.key, required this.position, this.customer});
+  const AddCustomerView(
+      {super.key,
+      required this.position,
+      this.customer,
+      this.isAddFromContact = false});
 
   @override
   State<AddCustomerView> createState() => _AddCustomerViewState();
@@ -37,7 +42,7 @@ class _AddCustomerViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.customer != null
+        title: Text(widget.customer != null && !widget.isAddFromContact
             ? 'Cập nhật khách hàng'
             : 'Thêm khách hàng'),
       ),
@@ -393,7 +398,7 @@ class _AddCustomerViewState
               }),
               const SizedBox(height: 20),
               TextButton(
-                onPressed: () => widget.customer != null
+                onPressed: () => widget.customer != null && !widget.isAddFromContact
                     ? viewActions.updateCustomer(widget.customer!)
                     : viewActions.addCustomer(widget.position),
                 style: TextButton.styleFrom(
@@ -410,7 +415,7 @@ class _AddCustomerViewState
                     color: Colors.white,
                   ),
                 ),
-                child: widget.customer != null
+                child: widget.customer != null && !widget.isAddFromContact
                     ? const Text('Cập nhật')
                     : const Text('Thêm khách hàng'),
               ),

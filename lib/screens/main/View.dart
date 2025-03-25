@@ -1,6 +1,7 @@
 import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
             label: "Danh bạ",
           )
         ],
-        onTap: context.read<GlobalStore>().handleChangeViews,
+        onTap: Get.find<GlobalStore>().handleChangeViews,
         currentIndex: context.watch<GlobalStore>().tabIndex,
       ),
     );

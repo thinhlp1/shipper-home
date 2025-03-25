@@ -1,22 +1,27 @@
 import 'dart:async';
 
+import 'package:base/config/global_store.dart';
 import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/models/user_contact.dart';
+import 'package:base/screens/customer/add_customer/add_customer_view.dart';
+import 'package:base/screens/customer/customer_action.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/perrmission_util.dart';
+import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:path/path.dart';
 
 class ContactAction extends ViewActions {
   RxList<UserContact> contacts = <UserContact>[].obs;
   RxList<UserContact> filteredContacts = <UserContact>[].obs;
   List<UserContact> contactsFiltered = [];
-
   List<Customer> customers = <Customer>[].obs;
-
   RxBool contactsLoaded = false.obs;
   Timer? _debounce;
 
@@ -97,6 +102,49 @@ class ContactAction extends ViewActions {
     customers = (await _customerService.getCustomersPhones()).cast<Customer>();
   }
 
+  /// Navigates to the AddCustomerView screen with the provided customer details.
+  ///
+  /// This function creates a new [Customer] object with the given [name] and [phone],
+  /// and navigates to the AddCustomerView screen. After returning from the screen,
+  /// it updates the contact list to mark the contact as a customer and refreshes the UI.
+  ///
+  /// Additionally, it sets a flag in the [GlobalStore] to indicate that the customer
+  /// list should be fetched again.
+  ///
+  /// Parameters:
+  /// - [name]: The name of the customer.
+  /// - [phone]: The phone number of the customer.
+  void goToAddCustomer(String name, String phone) {
+    Customer customer = Customer(
+        name: name,
+        phone: phone,
+        note: '',
+        map: '',
+        address: '',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
+    Get.to(() => AddCustomerView(
+              customer: customer,
+              position: customers.length + 1,
+              isAddFromContact: true,
+            ))!
+        .then((result) {
+      if (result != null) {
+        contacts
+            .where((contact) => contact.contact.phones.first.number == phone)
+            .forEach((contact) {
+          contact.isCustomer = true;
+          contact.customerId = customer.id;
+        });
+        filteredContacts.assignAll(contacts);
+        filteredContacts.refresh(); // Notify the UI to update the contact list
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          Get.find<GlobalStore>().setShouldFetchCustomer(true);
+        });
+      }
+    });
+  }
+
   /// Handles the search input changes with a debounce mechanism to limit the
   /// frequency of search operations. If the debounce timer is active, it cancels
   /// the previous timer and sets a new one with a delay of 500 milliseconds.
@@ -109,8 +157,15 @@ class ContactAction extends ViewActions {
     });
   }
 
+  /// Filters the list of contacts based on the provided keyword.
+  ///
+  /// If the keyword is empty, all contacts are assigned to the filtered list.
+  /// Otherwise, it filters the contacts whose display name or phone number
+  /// contains the keyword (case insensitive).
+  ///
+  /// Parameters:
+  /// - `keyword`: The search keyword to filter the contacts.
   void searchContact(String keyword) {
-    print(keyword);
     if (keyword.isEmpty) {
       filteredContacts.assignAll(contacts);
     } else {
