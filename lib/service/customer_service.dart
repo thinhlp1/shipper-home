@@ -78,6 +78,25 @@ class CustomerService {
     return customers;
   }
 
+  
+  /// Fetches a list of customers with their phone numbers from the database.
+  ///
+  /// This function performs a raw SQL query to retrieve the `id` and `phone`
+  /// fields from the `customer` table. The results are then mapped to a list
+  /// of `Customer` objects.
+  ///
+  /// Returns a `Future` that resolves to a list of `Customer` objects.
+  Future<List<Customer>> getCustomersPhones() async {
+    final db = await _databaseService.database;
+
+    final List<Map<String, dynamic>> results = await db.rawQuery('''
+      SELECT id, phone
+      FROM customer 
+    ''');
+
+    return  results.map((e) => Customer.fromMap(e)).toList();
+  }
+
   /// Updates the `isFavorite` status of a customer.
   ///
   /// This function updates the `isFavorite` status of the customer with the given [id].
@@ -151,7 +170,6 @@ class CustomerService {
       DBCustomerFileColumn.customerId: customerId,
       DBCustomerFileColumn.fileId: fileId,
     });
-
   }
 
   Future<void> deleteCustomerImage(int customerId, String imagePath) async {
@@ -177,7 +195,6 @@ class CustomerService {
           where:
               '${DBCustomerFileColumn.customerId} = ? AND ${DBCustomerFileColumn.fileId} = ?',
           whereArgs: [customerId, fileId]);
-
     }
   }
 

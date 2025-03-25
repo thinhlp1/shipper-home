@@ -42,38 +42,44 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
               TextFieldValidation.validName,
             ),
             const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                shrinkWrap: true,
-                itemCount: viewActions.contacts.length,
-                itemBuilder: (context, index) {
-                  final contact = viewActions.contacts[index].contact;
-                  return Slidable(
-                    endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      dismissible: DismissiblePane(onDismissed: () {}),
-                      children: [
-                        SlidableAction(
-                          foregroundColor:
-                              HexColor.fromHex(ThemeColors.PRIMARY),
-                          borderRadius: BorderRadius.circular(10),
-                          icon: Icons.delete,
-                          autoClose: true,
-                          spacing: 2,
-                          label: 'Xóa',
-                          onPressed: (BuildContext context) {},
-                        ),
-                      ],
+            viewActions.contactsLoaded.value
+                ? Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      shrinkWrap: true,
+                      itemCount: viewActions.filteredContacts.length,
+                      itemBuilder: (context, index) {
+                        final contact =
+                            viewActions.filteredContacts[index].contact;
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            dismissible: DismissiblePane(onDismissed: () {}),
+                            children: [
+                              SlidableAction(
+                                foregroundColor:
+                                    HexColor.fromHex(ThemeColors.PRIMARY),
+                                borderRadius: BorderRadius.circular(10),
+                                icon: Icons.delete,
+                                autoClose: true,
+                                spacing: 2,
+                                label: 'Xóa',
+                                onPressed: (BuildContext context) {},
+                              ),
+                            ],
+                          ),
+                          key: ValueKey(contact.id),
+                          child: ContactComponent(
+                            userContact: viewActions.filteredContacts[index],
+                          ),
+                        );
+                      },
                     ),
-                    key: ValueKey(contact.id),
-                    child: ContactComponent(
-                      userContact: viewActions.contacts[index],
-                    ),
-                  );
-                },
-              ),
-            )
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
           ],
         ));
   }
@@ -98,7 +104,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
         onTapOutside: (event) =>
             {FocusManager.instance.primaryFocus?.unfocus()},
         onFieldSubmitted: (value) {
-          // viewActions.searchCustomer(value);
+          viewActions.searchContact(value);
         },
         decoration: InputDecoration(
           hintText: title,
@@ -110,7 +116,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                       color: HexColor.fromHex(ThemeColors.SECONDARY)),
                   onPressed: () {
                     textEditingController.clear();
-                    // viewActions.searchCustomer('');
+                    viewActions.searchContact('');
                   },
                 )
               : null,

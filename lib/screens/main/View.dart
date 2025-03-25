@@ -1,6 +1,7 @@
 import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/hex_color.dart';
@@ -18,7 +19,7 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
   @override
   Widget render(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
+      body: LazyLoadIndexedStack(
         index: context.watch<GlobalStore>().tabIndex,
         children: viewActions.views,
       ),
