@@ -38,7 +38,8 @@ class FavoriteButtonState extends State<FavoriteButton>
     // Phát âm thanh
     await _audioPlayer.play(AssetSource(Assets.SOUND_LIKE));
 
-    _controller.forward().then((_) => _controller.reverse());
+    // Disable animation
+    // _controller.forward().then((_) => _controller.reverse());
   }
 
   @override

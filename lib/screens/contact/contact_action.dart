@@ -5,17 +5,13 @@ import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/models/user_contact.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
-import 'package:base/screens/customer/customer_action.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/perrmission_util.dart';
-import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:path/path.dart';
 
 class ContactAction extends ViewActions {
   RxList<UserContact> contacts = <UserContact>[].obs;

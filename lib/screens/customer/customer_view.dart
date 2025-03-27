@@ -4,6 +4,7 @@ import 'package:base/config/view_widget.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
+import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,6 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (Get.find<GlobalStore>().shouldFetchCustomer) {
-        print("fetch golobal store");
         viewActions.fetchCustomers();
         Get.find<GlobalStore>().setShouldFetchCustomer(false);
       }
@@ -61,6 +61,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             child: ReorderableListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
+               scrollController: viewActions.scrollController,
               itemCount: viewActions.filteredCustomer.length,
               itemBuilder: (BuildContext context, int index) {
                 final customer = viewActions.filteredCustomer[index];
@@ -184,6 +185,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         .then((result) {
       if (result != null) {
         viewActions.fetchCustomers();
+        viewActions.scrollToTheEnd();
       }
     });
   }
@@ -240,7 +242,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                       color: HexColor.fromHex(ThemeColors.SECONDARY)),
                   onPressed: () {
                     textEditingController.clear();
-                      Get.find<GlobalStore>().clearSearchText();
+                    Get.find<GlobalStore>().clearSearchText();
                     viewActions.searchCustomer('');
                   },
                 )

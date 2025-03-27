@@ -7,14 +7,10 @@ class SnackbarUtil {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       icon: const Icon(Icons.check_circle, color: Colors.green),
-      backgroundColor: Colors.white,
-      borderColor: Colors.green,
-      borderWidth: 1.0,
-      colorText: Colors.green,
+      colorText: Colors.green.shade700,
       duration: const Duration(milliseconds: 1500),
-      margin: const EdgeInsets.all(8.0),
     );
   }
 
@@ -23,14 +19,10 @@ class SnackbarUtil {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       icon: const Icon(Icons.error, color: Colors.red),
-      backgroundColor: Colors.white,
-      borderColor: Colors.red,
-      borderWidth: 1.0,
-      colorText: Colors.red,
+      colorText: Colors.red.shade700,
       duration: const Duration(milliseconds: 1500),
-      margin: const EdgeInsets.all(8.0),
     );
   }
 
@@ -39,13 +31,10 @@ class SnackbarUtil {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       icon: const Icon(Icons.warning, color: Colors.orange),
-      backgroundColor: Colors.white,
-      borderColor: Colors.orange,
-      borderWidth: 1.0,
+      colorText: Colors.orange.shade700,
       duration: const Duration(milliseconds: 1500),
-      margin: const EdgeInsets.all(8.0),
     );
   }
 
@@ -54,14 +43,10 @@ class SnackbarUtil {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       icon: const Icon(Icons.info, color: Colors.blue),
-      backgroundColor: Colors.white,
-      borderColor: Colors.blue,
-      borderWidth: 1.0,
-      colorText: Colors.blue,
+      colorText: Colors.blue.shade700,
       duration: const Duration(milliseconds: 1500),
-      margin: const EdgeInsets.all(8.0),
     );
   }
 }

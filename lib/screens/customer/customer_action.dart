@@ -18,7 +18,9 @@ class CustomerAction extends ViewActions {
   Rxn<TextEditingController> searchController = Rxn(TextEditingController());
   final CustomerService _customerService = CustomerService();
   final DatabaseService _databaseService = DatabaseService.instance;
+
   Timer? _debounce;
+  final ScrollController scrollController = ScrollController();
 
   @override
   initState() {
@@ -230,6 +232,18 @@ class CustomerAction extends ViewActions {
         longitude,
       );
     }
+  }
+
+  /// Scrolls to the end of the list of customers.
+  void scrollToTheEnd() {
+    // Chờ giao diện cập nhật rồi scroll xuống cuối danh sách
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   void callCustomer(int id) {

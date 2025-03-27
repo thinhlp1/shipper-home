@@ -1,4 +1,3 @@
-
 // ignore_for_file: avoid_print
 
 import 'package:path/path.dart';
@@ -138,7 +137,7 @@ class DatabaseService {
       ''');
 
         // **Inser default data**
-        await insertDefaultData(db);
+        // await insertTestData(db);
       },
     );
   }
@@ -245,12 +244,24 @@ class DatabaseService {
       DBCustomerFileColumn.fileId: file2Id,
     });
 
-    // Chèn nhãn mặc định
-    await db.insert(
-        'lable', {'name': 'Quan trọng', 'icon': '⭐', 'color': '#FFD700'});
-    await db.insert(
-        'lable', {'name': 'Chưa xử lý', 'icon': '⏳', 'color': '#FF5733'});
-
     print('Dữ liệu mặc định đã được chèn vào database');
+  }
+
+  Future<void> insertTestData(Database db) async {
+    // Chèn khách hàng mẫu
+    for (int i = 0; i < 100; i++) {
+      await db.insert(DBTable.customer, {
+        DBCustomerColumn.name: 'Nguyễn Văn A $i',
+        DBCustomerColumn.phone: '0334831013',
+        DBCustomerColumn.note: 'Khách VIP $i',
+        DBCustomerColumn.map: '',
+        DBCustomerColumn.address: 'Hà Nội $i',
+        DBCustomerColumn.position: i + 1,
+        DBCustomerColumn.isFavorite: 0,
+        DBCustomerColumn.deleted: 0,
+      });
+    }
+
+    print('Insert 100 dữ liệu test');
   }
 }
