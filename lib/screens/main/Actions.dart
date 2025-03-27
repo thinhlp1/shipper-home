@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class MainActions extends ViewActions {
   List<Widget> views = <Widget>[
     const CustomerScreen(),
-    const CustomerScreen(),
     const ContactScreen(),
   ];
 }

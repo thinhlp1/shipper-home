@@ -35,10 +35,6 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
             label: "Khách hàng",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: "Quan trọng",
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: "Danh bạ",
           )
