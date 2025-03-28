@@ -6,6 +6,7 @@ import 'package:base/config/view_actions.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/service/database_service.dart';
+import 'package:base/third_service/call_service.dart';
 import 'package:base/third_service/google_map_service.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
@@ -234,6 +235,17 @@ class CustomerAction extends ViewActions {
         longitude,
       );
     }
+  }
+
+  /// Opens the phone dialer with the specified phone number.
+  ///
+  /// This function uses the `CallService` to initiate a phone call
+  /// to the provided phone number.
+  ///
+  /// Parameters:
+  /// - `phone`: The phone number to call. It should be a valid phone number.
+  Future<void> callCustomerPhone(String phone) async {
+    await CallService.callPhoneNumber(phone);
   }
 
   /// Scrolls to the end of the list of customers.

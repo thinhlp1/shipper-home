@@ -6,6 +6,7 @@ import 'package:base/models/customer.dart';
 import 'package:base/models/user_contact.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
 import 'package:base/service/customer_service.dart';
+import 'package:base/third_service/call_service.dart';
 import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/perrmission_util.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,8 @@ class ContactAction extends ViewActions {
         bool isCustomer = false;
         int? customerId;
         for (var customer in customers) {
-          if (customer.phone == contact.phones.first.number) {
+          if (contact.phones.isNotEmpty &&
+              customer.phone == contact.phones.first.number) {
             isCustomer = true;
             customerId = customer.id;
             break;
@@ -85,11 +87,7 @@ class ContactAction extends ViewActions {
       }).toList();
       contacts.assignAll(fetchedContacts);
       filteredContacts.assignAll(fetchedContacts);
-    } else {
-      DialogUtil.alertDialog(
-          "Vui lòng cấp quyền truy cập danh bạ để sử dụng chức năng này");
-      fetchContacts();
-    }
+    } else {}
   }
 
   /// Load list of customers
@@ -169,8 +167,20 @@ class ContactAction extends ViewActions {
         return contact.contact.displayName
                 .toLowerCase()
                 .contains(keyword.toLowerCase()) ||
-            contact.contact.phones.first.number.contains(keyword);
+            contact.contact.phones.isNotEmpty &&
+                contact.contact.phones.first.number.contains(keyword);
       }).toList();
     }
+  }
+
+  /// Opens the phone dialer with the specified phone number.
+  ///
+  /// This function uses the `CallService` to initiate a phone call
+  /// to the provided phone number.
+  ///
+  /// Parameters:
+  /// - `phone`: The phone number to call. It should be a valid phone number.
+  Future<void> callCustomerPhone(String phone) async {
+    await CallService.callPhoneNumber(phone);
   }
 }

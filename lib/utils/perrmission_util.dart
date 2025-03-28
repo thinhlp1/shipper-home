@@ -1,6 +1,10 @@
+import 'package:base/utils/hex_color.dart';
+import 'package:base/utils/theme_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 class PermissionUtil {
   /// Checks storage permissions for the application.
@@ -60,49 +64,161 @@ class PermissionUtil {
     }
   }
 
+  /// Checks the current call phone permissions status.
+  ///
+  /// If the call phone permission is already granted, it returns `true`.
+  /// Otherwise, it requests the call phone permission and returns the result.
+  ///
+  /// Returns a [Future] that completes with `true` if the call phone permission
+  /// is granted, and `false` otherwise.
+  static Future<bool> checkCallPhonePermissions() async {
+    PermissionStatus callPhoneStatus = await Permission.phone.status;
+    if (callPhoneStatus.isGranted) {
+      return true;
+    } else {
+      return await requestCallPhonePermissions();
+    }
+  }
+
+  /// Checks the current location permissions status.
+  ///
+  /// If the location permission is already granted, it returns `true`.
+  /// Otherwise, it requests the location permission and returns the result.
+  ///
+  /// Returns a [Future] that completes with `true` if the location permission
+  /// is granted, and `false` otherwise.
+  static Future<bool> checkLocationPermissions() async {
+    PermissionStatus locationStatus = await Permission.location.status;
+    if (locationStatus.isGranted) {
+      return true;
+    } else {
+      return await requestLocationPermissions();
+    }
+  }
+
   /// Requests storage permissions from the user.
   ///
   /// This function uses the `permission_handler` package to request storage
-  /// permissions. It returns a `Future<bool>` indicating whether the storage
-  /// permission was granted (`true`) or not (`false`).
+  /// permissions. If the permission is already granted, it returns `true`.
+  /// If the permission is permanently denied, it shows a dialog to inform
+  /// the user and returns `false`. Otherwise, it requests the permission
+  /// and returns the result.
   ///
   /// Returns:
   /// - `Future<bool>`: A future that resolves to `true` if the storage
   ///   permission is granted, otherwise `false`.
   static Future<bool> requestStoragePermissions() async {
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.storage].request();
-    return statuses[Permission.storage]?.isGranted ?? false;
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      showPermissionDialog('Lưu trữ');
+      return false;
+    } else {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.storage].request();
+      return statuses[Permission.storage]?.isGranted ?? false;
+    }
   }
 
   /// Requests camera permissions from the user.
   ///
-  /// This function uses the `permission_handler` package to request camera
-  /// permissions. It returns a `Future<bool>` indicating whether the camera
-  /// permissions were granted (`true`) or not (`false`).
+  /// This function uses the `permission_handler` package to request storage
+  /// permissions. If the permission is already granted, it returns `true`.
+  /// If the permission is permanently denied, it shows a dialog to inform
+  /// the user and returns `false`. Otherwise, it requests the permission
+  /// and returns the result.
   ///
   /// Returns:
   /// - `Future<bool>`: A future that resolves to `true` if the camera
   ///   permissions were granted, otherwise `false`.
   static Future<bool> requestCameraPermissions() async {
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.camera].request();
-    return statuses[Permission.camera]?.isGranted ?? false;
+    PermissionStatus status = await Permission.camera.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      showPermissionDialog('Camera');
+      return false;
+    } else {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.camera].request();
+      return statuses[Permission.camera]?.isGranted ?? false;
+    }
   }
 
   /// Requests contact permissions from the user.
   ///
-  /// This function uses the `permission_handler` package to request contact
-  /// permissions. It returns a `Future<bool>` indicating whether the cotnact
-  /// permissions were granted (`true`) or not (`false`).
+  /// This function uses the `permission_handler` package to request storage
+  /// permissions. If the permission is already granted, it returns `true`.
+  /// If the permission is permanently denied, it shows a dialog to inform
+  /// the user and returns `false`. Otherwise, it requests the permission
+  /// and returns the result.
   ///
   /// Returns:
   /// - `Future<bool>`: A future that resolves to `true` if the cotnact
   ///   permissions were granted, otherwise `false`.
   static Future<bool> requestContactPermissions() async {
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.contacts].request();
-    return statuses[Permission.contacts]?.isGranted ?? false;
+    PermissionStatus status = await Permission.contacts.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      showPermissionDialog('Danh bạ');
+      return false;
+    } else {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.contacts].request();
+      return statuses[Permission.contacts]?.isGranted ?? false;
+    }
+  }
+
+  /// Requests call phone permissions from the user.
+  ///
+  /// This function uses the `permission_handler` package to request storage
+  /// permissions. If the permission is already granted, it returns `true`.
+  /// If the permission is permanently denied, it shows a dialog to inform
+  /// the user and returns `false`. Otherwise, it requests the permission
+  /// and returns the result.
+  ///
+  /// Returns:
+  /// - `Future<bool>`: A future that resolves to `true` if the call phone
+  ///   permission is granted, otherwise `false`.
+  static Future<bool> requestCallPhonePermissions() async {
+    PermissionStatus status = await Permission.phone.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      showPermissionDialog('Gọi điện');
+      return false;
+    } else {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.phone].request();
+      return statuses[Permission.phone]?.isGranted ?? false;
+    }
+  }
+
+  /// Requests location permissions from the user.
+  ///
+  /// This function uses the `permission_handler` package to request location
+  /// permissions. If the permission is already granted, it returns `true`.
+  /// If the permission is permanently denied, it shows a dialog to inform
+  /// the user and returns `false`. Otherwise, it requests the permission
+  /// and returns the result.
+  ///
+  /// Returns:
+  /// - `Future<bool>`: A future that resolves to `true` if the location
+  ///   permission is granted, otherwise `false`.
+  static Future<bool> requestLocationPermissions() async {
+    PermissionStatus status = await Permission.location.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      showPermissionDialog('Vị trí');
+      return false;
+    } else {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.location].request();
+      return statuses[Permission.location]?.isGranted ?? false;
+    }
   }
 
   /// Checks if the current platform is Android.
@@ -146,5 +262,45 @@ class PermissionUtil {
     } catch (e) {
       return false;
     }
+  }
+
+  static Future<void> showPermissionDialog(String permission) async {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Yêu cầu quyền $permission'),
+        content: Text(
+            'Ứng dụng cần quyền $permission. Vui lòng cấp quyền trong Cài đặt.'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text(
+              'Hủy',
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              openAppSettings();
+              Get.back();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
+            ),
+            child: const Text(
+              'Mở Cài đặt',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

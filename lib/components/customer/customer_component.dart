@@ -15,7 +15,7 @@ class CustomerComponent extends StatefulWidget {
   final Customer customer;
 
   final void Function(int) onFavoritePressed;
-  final void Function(int) onCallPressed;
+  final void Function(String) onCallPressed;
   final void Function(Customer) onEditPressed;
   final void Function(String) onMapPressed;
 
@@ -265,7 +265,7 @@ class _CustomerComponenttState
                           children: [
                             IconButton(
                                 onPressed: () => {
-                                      widget.onCallPressed(customer.id!),
+                                      widget.onCallPressed(customer.phone),
                                     },
                                 iconSize: 25,
                                 color: Colors.blue,

@@ -89,7 +89,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                     customer: customer,
                     onFavoritePressed: (id) =>
                         viewActions.updateIsFavorite(id, !customer.isFavorite),
-                    onCallPressed: (int id) => viewActions.callCustomer(id),
+                    onCallPressed: (String phone) => viewActions.callCustomerPhone(customer.phone),
                     onEditPressed: (Customer customer) =>
                         _goToEditCustomer(customer),
                     onMapPressed: (String map) =>

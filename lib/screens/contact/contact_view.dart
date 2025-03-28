@@ -44,40 +44,57 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
             const SizedBox(height: 10),
             viewActions.contactsLoaded.value
                 ? Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      shrinkWrap: true,
-                      itemCount: viewActions.filteredContacts.length,
-                      itemBuilder: (context, index) {
-                        final contact =
-                            viewActions.filteredContacts[index].contact;
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            motion: const ScrollMotion(),
-                            dismissible: DismissiblePane(onDismissed: () {}),
-                            children: [
-                              SlidableAction(
-                                foregroundColor:
-                                    HexColor.fromHex(ThemeColors.PRIMARY),
-                                borderRadius: BorderRadius.circular(10),
-                                icon: Icons.delete,
-                                autoClose: true,
-                                spacing: 2,
-                                label: 'Xóa',
-                                onPressed: (BuildContext context) {},
+                    child: viewActions.filteredContacts.isEmpty
+                        ? Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                print("Tải lại danh bạ");
+                                viewActions.fetchContacts();
+                              },
+                              child: const Text(
+                                "Tải lại danh bạ",
+                                style: TextStyle(color: Colors.black),
                               ),
-                            ],
-                          ),
-                          key: ValueKey(contact.id),
-                          child: ContactComponent(
-                            userContact: viewActions.filteredContacts[index],
-                            onAddCustomerPressed: (name, phone) {
-                              viewActions.goToAddCustomer(name, phone);
+                            ),
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            shrinkWrap: true,
+                            itemCount: viewActions.filteredContacts.length,
+                            itemBuilder: (context, index) {
+                              final contact =
+                                  viewActions.filteredContacts[index].contact;
+                              return Slidable(
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  dismissible:
+                                      DismissiblePane(onDismissed: () {}),
+                                  children: [
+                                    SlidableAction(
+                                      foregroundColor:
+                                          HexColor.fromHex(ThemeColors.PRIMARY),
+                                      borderRadius: BorderRadius.circular(10),
+                                      icon: Icons.delete,
+                                      autoClose: true,
+                                      spacing: 2,
+                                      label: 'Xóa',
+                                      onPressed: (BuildContext context) {},
+                                    ),
+                                  ],
+                                ),
+                                key: ValueKey(contact.id),
+                                child: ContactComponent(
+                                  userContact:
+                                      viewActions.filteredContacts[index],
+                                  onAddCustomerPressed: (name, phone) {
+                                    viewActions.goToAddCustomer(name, phone);
+                                  },
+                                  onCallPressed: (String phone) =>
+                                      viewActions.callCustomerPhone(phone),
+                                ),
+                              );
                             },
                           ),
-                        );
-                      },
-                    ),
                   )
                 : const Padding(
                     padding: EdgeInsets.only(top: 100),
