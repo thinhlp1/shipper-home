@@ -100,6 +100,8 @@ class CustomerAction extends ViewActions {
 
     // Update positions in the database
     _customerService.updateCustomerPositions(customers);
+    SnackbarUtil.showFavoriteSnackbar('Thành công',
+        isFavorite ? 'Đã đánh dấu là quan trọng' : 'Đã bỏ quan trọng');
   }
 
   /// Reorders the list of customers by moving a customer from the old index to the new index.

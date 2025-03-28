@@ -49,4 +49,16 @@ class SnackbarUtil {
       duration: const Duration(milliseconds: 1500),
     );
   }
+
+  /// Shows a favorite snackbar with the given [title] and [message].
+  static void showFavoriteSnackbar(String title, String message) {
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.TOP,
+      icon: const Icon(Icons.favorite, color: Colors.pink),
+      colorText: Colors.pink.shade700,
+      duration: const Duration(milliseconds: 1500),
+    );
+  }
 }

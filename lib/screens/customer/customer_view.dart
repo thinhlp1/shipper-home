@@ -61,7 +61,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             child: ReorderableListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.all(8),
-               scrollController: viewActions.scrollController,
+              scrollController: viewActions.scrollController,
               itemCount: viewActions.filteredCustomer.length,
               itemBuilder: (BuildContext context, int index) {
                 final customer = viewActions.filteredCustomer[index];
@@ -110,9 +110,9 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         backgroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
         shape: const CircleBorder(),
         child: const Icon(
-          Icons.add,
+          Icons.person_add,
           color: Colors.white,
-          size: 35,
+          size: 30,
         ),
       ),
     );
