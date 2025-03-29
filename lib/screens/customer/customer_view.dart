@@ -1,10 +1,10 @@
 import 'package:base/components/customer/customer_component.dart';
 import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
+import 'package:base/utils/assets.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
-import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
@@ -58,49 +58,78 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: ReorderableListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
-              scrollController: viewActions.scrollController,
-              itemCount: viewActions.filteredCustomer.length,
-              itemBuilder: (BuildContext context, int index) {
-                final customer = viewActions.filteredCustomer[index];
-                return Slidable(
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    dismissible: DismissiblePane(onDismissed: () {}),
-                    children: [
-                      SlidableAction(
-                        foregroundColor: HexColor.fromHex(ThemeColors.PRIMARY),
-                        borderRadius: BorderRadius.circular(10),
-                        icon: Icons.delete,
-                        autoClose: true,
-                        spacing: 2,
-                        label: 'Xóa',
-                        onPressed: (BuildContext context) {
-                          _showDeleteConfirmationDialog(
-                              context, customer.id!, customer.name!);
-                        },
-                      ),
-                    ],
+            child: viewActions.filteredCustomer.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 20),
+                        Image.asset(
+                          Assets.IMAGE_NO_CUSTOMERS,
+                          width: 300,
+                          height: 300,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _goToAddCustomer();
+                          },
+                          child: Text(
+                            'Chưa có khách hàng. Thêm ngay!',
+                            style: TextStyle(
+                                color: HexColor.fromHex(ThemeColors.PRIMARY),
+                                fontSize: 20),
+                          ),
+                        ),
+                        // This is a placeholder for the empty state of the customer list.
+                        const SizedBox(height: 60),
+                      ],
+                    ),
+                  )
+                : ReorderableListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(8),
+                    scrollController: viewActions.scrollController,
+                    itemCount: viewActions.filteredCustomer.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final customer = viewActions.filteredCustomer[index];
+                      return Slidable(
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          dismissible: DismissiblePane(onDismissed: () {}),
+                          children: [
+                            SlidableAction(
+                              foregroundColor:
+                                  HexColor.fromHex(ThemeColors.PRIMARY),
+                              borderRadius: BorderRadius.circular(10),
+                              icon: Icons.delete,
+                              autoClose: true,
+                              spacing: 2,
+                              label: 'Xóa',
+                              onPressed: (BuildContext context) {
+                                _showDeleteConfirmationDialog(
+                                    context, customer.id!, customer.name!);
+                              },
+                            ),
+                          ],
+                        ),
+                        key: ValueKey(customer.id),
+                        child: CustomerComponent(
+                          customer: customer,
+                          onFavoritePressed: (id) => viewActions
+                              .updateIsFavorite(id, !customer.isFavorite),
+                          onCallPressed: (String phone) =>
+                              viewActions.callCustomerPhone(customer.phone),
+                          onEditPressed: (Customer customer) =>
+                              _goToEditCustomer(customer),
+                          onMapPressed: (String map) =>
+                              viewActions.openGoogleMaps(map),
+                        ),
+                      );
+                    },
+                    onReorder: (int oldIndex, int newIndex) {
+                      viewActions.reorderCustomer(oldIndex, newIndex);
+                    },
                   ),
-                  key: ValueKey(customer.id),
-                  child: CustomerComponent(
-                    customer: customer,
-                    onFavoritePressed: (id) =>
-                        viewActions.updateIsFavorite(id, !customer.isFavorite),
-                    onCallPressed: (String phone) => viewActions.callCustomerPhone(customer.phone),
-                    onEditPressed: (Customer customer) =>
-                        _goToEditCustomer(customer),
-                    onMapPressed: (String map) =>
-                        viewActions.openGoogleMaps(map),
-                  ),
-                );
-              },
-              onReorder: (int oldIndex, int newIndex) {
-                viewActions.reorderCustomer(oldIndex, newIndex);
-              },
-            ),
           )
         ],
       ),

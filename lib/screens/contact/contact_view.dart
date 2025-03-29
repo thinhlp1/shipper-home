@@ -48,12 +48,14 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                         ? Center(
                             child: GestureDetector(
                               onTap: () {
-                                print("Tải lại danh bạ");
                                 viewActions.fetchContacts();
                               },
-                              child: const Text(
-                                "Tải lại danh bạ",
-                                style: TextStyle(color: Colors.black),
+                              child: Text(
+                                'Tải lại danh bạ',
+                                style: TextStyle(
+                                    color:
+                                        HexColor.fromHex(ThemeColors.PRIMARY),
+                                    fontSize: 20),
                               ),
                             ),
                           )
