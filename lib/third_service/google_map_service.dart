@@ -1,4 +1,5 @@
 import 'package:base/utils/dialog_util.dart';
+import 'package:base/utils/perrmission_util.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,41 +13,46 @@ class GoogleMapService {
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
-  static Future<Position> determinePosition() async {
+  static Future<Position?> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      DialogUtil.alertDialog('Thiết bị chưa bật GPS');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        DialogUtil.alertDialog('Ứng dụng cần quyền truy cập vị trí');
+    try {
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        DialogUtil.alertDialog('Thiết bị chưa bật GPS');
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      DialogUtil.alertDialog('Ứng dụng cần quyền truy cập vị trí');
-    }
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied, next time you could try
+          // requesting permissions again (this is also where
+          // Android's shouldShowRequestPermissionRationale
+          // returned true. According to Android guidelines
+          // your App should show an explanatory UI now.
+          DialogUtil.alertDialog('Ứng dụng cần quyền truy cập vị trí');
+        }
+      }
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition(
-        locationSettings: locationSettings);
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+        await PermissionUtil.showPermissionDialog('Vị trí');
+      }
+
+      // When we reach here, permissions are granted and we can
+      // continue accessing the position of the device.
+      return await Geolocator.getCurrentPosition(
+          locationSettings: locationSettings);
+    } catch (e) {
+      // Handle the error here, e.g., log it or show a message to the user
+      return null;
+    }
   }
 
   /// Opens Google Maps at the specified latitude and longitude.

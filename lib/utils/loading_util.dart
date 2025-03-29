@@ -23,7 +23,8 @@ class LoadingUtil {
   /// This function checks if a dialog is open using `Get.isDialogOpen`.
   /// If a dialog is open, it closes the dialog by calling `Get.back()`.
   static void hideLoading() {
-    if (Get.isDialogOpen ?? false) {
+    if (Get.isDialogOpen == true) {
+      print('Dialog is open, closing it...');
       Get.back();
     }
   }
