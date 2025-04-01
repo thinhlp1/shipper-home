@@ -130,9 +130,11 @@ class AddCustomerAction extends ViewActions {
       }
 
       // Show success notification
-      //
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context, true);
+      //Check if any dialog is open before closing it
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+      Get.back(result: true);
       SnackbarUtil.showSuccessSnackbar('Thành công', 'Thêm thành công');
     }
   }
@@ -195,8 +197,12 @@ class AddCustomerAction extends ViewActions {
 
       await _customerService.updateCustomer(customer.id!, customer);
 
-      // ignore: use_build_context_synchronously
-      Navigator.pop(context, true);
+      // Show success notification
+      // Check if any dialog is open before closing it
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+      Get.back(result: true);
       SnackbarUtil.showSuccessSnackbar('Thành công', 'Cập nhật thành công');
     }
   }

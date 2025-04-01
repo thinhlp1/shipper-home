@@ -207,14 +207,16 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
   /// screen. After the navigation completes, it reloads the list of customers
   /// to reflect any new additions.
   void _goToAddCustomer() {
-    // viewActions.resetDatabase();
     Get.to(() => AddCustomerView(
               position: viewActions.customers.length + 1,
             ))!
         .then((result) {
       if (result != null) {
-        viewActions.fetchCustomers();
-        viewActions.scrollToTheEnd();
+        viewActions.fetchCustomers().then((_) {
+          Future.delayed(const Duration(milliseconds: 200), () {
+            viewActions.scrollToTheEnd();
+          });
+        });
       }
     });
   }
