@@ -10,10 +10,12 @@ class GlobalStore with ChangeNotifier {
   int _tabIndex = 0;
   String _searchText = '';
   bool _shouldFetchCustomer = false;
+  String _markNotCustomer = '';
 
   int get tabIndex => _tabIndex;
   String get searchText => _searchText;
   bool get shouldFetchCustomer => _shouldFetchCustomer;
+  String get markNotCustomer => _markNotCustomer;
 
   void handleChangeViews(int i) {
     _tabIndex = i;
@@ -40,6 +42,11 @@ class GlobalStore with ChangeNotifier {
 
   void setShouldFetchCustomer(bool status) {
     _shouldFetchCustomer = status;
+    notifyListeners();
+  }
+
+  void setMarkNotCustomer(String phone) {
+    _markNotCustomer = phone;
     notifyListeners();
   }
 }

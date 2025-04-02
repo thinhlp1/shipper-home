@@ -11,6 +11,7 @@ class SnackbarUtil {
       icon: const Icon(Icons.check_circle, color: Colors.green),
       colorText: Colors.green.shade700,
       duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.only(top: 50),
     );
   }
 
@@ -23,6 +24,7 @@ class SnackbarUtil {
       icon: const Icon(Icons.error, color: Colors.red),
       colorText: Colors.red.shade700,
       duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.only(top: 50),
     );
   }
 
@@ -35,6 +37,7 @@ class SnackbarUtil {
       icon: const Icon(Icons.warning, color: Colors.orange),
       colorText: Colors.orange.shade700,
       duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.only(top: 50),
     );
   }
 
@@ -47,11 +50,15 @@ class SnackbarUtil {
       icon: const Icon(Icons.info, color: Colors.blue),
       colorText: Colors.blue.shade700,
       duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.only(top: 50),
     );
   }
 
   /// Shows a favorite snackbar with the given [title] and [message].
   static void showFavoriteSnackbar(String title, String message) {
+    if (Get.isSnackbarOpen) {
+      Get.back();
+    }
     Get.snackbar(
       title,
       message,
@@ -59,6 +66,7 @@ class SnackbarUtil {
       icon: const Icon(Icons.favorite, color: Colors.pink),
       colorText: Colors.pink.shade700,
       duration: const Duration(milliseconds: 1500),
+      margin: const EdgeInsets.only(top: 50),
     );
   }
 }

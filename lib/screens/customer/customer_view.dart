@@ -58,7 +58,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: viewActions.filteredCustomer.isEmpty
+            child: viewActions.customers.isEmpty
                 ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
