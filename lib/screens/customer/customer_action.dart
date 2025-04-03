@@ -185,6 +185,8 @@ class CustomerAction extends ViewActions {
     if (keyword.isEmpty) {
       filteredCustomer.assignAll(customers);
     } else {
+      keyword = keyword.replaceAll(' ', '');
+      keyword = keyword.replaceFirst('+84', '0');
       filteredCustomer.value = customers.where((customer) {
         return customer.name!.toLowerCase().contains(keyword.toLowerCase()) ||
             customer.phone.contains(keyword) ||

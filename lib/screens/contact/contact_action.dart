@@ -188,11 +188,11 @@ class ContactAction extends ViewActions {
     if (keyword.isEmpty) {
       filteredContacts.assignAll(contacts);
     } else {
+      String keywordFormatted = replacePhoneNumber(keyword);
       filteredContacts.value = contacts.where((contact) {
         String formattedPhone = contact.contact.phones.isNotEmpty
             ? contact.contact.phones.first.number
             : '';
-        String keywordFormatted = replacePhoneNumber(keyword);
         return contact.contact.displayName
                 .toLowerCase()
                 .contains(keyword.toLowerCase()) ||
