@@ -4,8 +4,10 @@ import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/models/user_contact.dart';
 import 'package:base/utils/hex_color.dart';
+import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:provider/provider.dart';
 
@@ -77,6 +79,16 @@ class _ContactComponenttState
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: _toggleSize,
+            onDoubleTap: () {
+              Clipboard.setData(ClipboardData(
+                text:
+                    '${contact.displayName} - ${contact.phones.isNotEmpty ? contact.phones.first.number : ''}',
+              ));
+              SnackbarUtil.showScaffoldSnackbar(
+                context,
+                'Đã sao chép thông tin khách hàng',
+              );
+            },
             child: Row(
               children: [
                 const SizedBox(width: 10),

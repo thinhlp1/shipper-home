@@ -69,4 +69,14 @@ class SnackbarUtil {
       margin: const EdgeInsets.only(top: 20),
     );
   }
+
+  /// Shows a snackbar with the given  [message] using the ScaffoldMessenger.
+  static void showScaffoldSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 }

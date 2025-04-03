@@ -28,6 +28,17 @@ class ContactAction extends ViewActions {
 
   Rxn<TextEditingController> searchController = Rxn(TextEditingController());
 
+  final List _colors = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.indigo,
+    Colors.purple
+  ];
+
+  final String _numerPhonePrefix = '+84';
+
   @override
   initState() {
     loadData();
@@ -56,15 +67,14 @@ class ContactAction extends ViewActions {
   /// Throws:
   /// - `Exception` if there is an error fetching the contacts.
   Future<void> fetchContacts() async {
-    List colors = [Colors.green, Colors.indigo, Colors.yellow, Colors.orange];
     int colorIndex = 0;
     if (await PermissionUtil.checkContactPermissions()) {
       List<UserContact> fetchedContacts =
           (await FlutterContacts.getContacts(withProperties: true))
               .map((contact) {
-        Color baseColor = colors[colorIndex];
+        Color baseColor = _colors[colorIndex];
         colorIndex++;
-        if (colorIndex == colors.length) {
+        if (colorIndex == _colors.length) {
           colorIndex = 0;
         }
 
@@ -75,8 +85,8 @@ class ContactAction extends ViewActions {
           if (contact.phones.isNotEmpty) {
             String contactPhone =
                 contact.phones.first.number.replaceAll(' ', '');
-            if (contactPhone.startsWith('+84')) {
-              contactPhone = contactPhone.replaceFirst('+84', '0');
+            if (contactPhone.startsWith(_numerPhonePrefix)) {
+              contactPhone = contactPhone.replaceFirst(_numerPhonePrefix, '0');
             }
             if (contactPhone == customer.phone.replaceAll(' ', '')) {
               isCustomer = true;
@@ -117,7 +127,7 @@ class ContactAction extends ViewActions {
   /// - [name]: The name of the customer.
   /// - [phone]: The phone number of the customer.
   void goToAddCustomer(String name, String phone) {
-    String phoneNumber = phone.replaceFirst('+84', '0');
+    String phoneNumber = phone.replaceFirst(_numerPhonePrefix, '0');
     phoneNumber = phoneNumber.replaceAll(' ', '');
     Customer customer = Customer(
         name: name,
@@ -139,8 +149,8 @@ class ContactAction extends ViewActions {
           if (contact.contact.phones.isNotEmpty) {
             String contactPhone =
                 contact.contact.phones.first.number.replaceAll(' ', '');
-            if (contactPhone.startsWith('+84')) {
-              contactPhone = contactPhone.replaceFirst('+84', '0');
+            if (contactPhone.startsWith(_numerPhonePrefix)) {
+              contactPhone = contactPhone.replaceFirst(_numerPhonePrefix, '0');
             }
             return contactPhone == phoneNumber;
           }

@@ -4,7 +4,9 @@ import 'package:base/components/customer/important_button.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/assets.dart';
+import 'package:base/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'customer_component_action.dart';
 
@@ -140,6 +142,16 @@ class _CustomerComponenttState
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: _toggleSize,
+            onDoubleTap: () {
+              Clipboard.setData(ClipboardData(
+                text:
+                    '${customer.name} - ${customer.phone} - ${customer.address} - ${customer.note}',
+              ));
+              SnackbarUtil.showScaffoldSnackbar(
+                context,
+                'Đã sao chép thông tin khách hàng',
+              );
+            },
             child: Row(
               children: [
                 const SizedBox(width: 10),
