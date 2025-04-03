@@ -57,6 +57,69 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             TextFieldValidation.validName,
           ),
           const SizedBox(height: 10),
+          if (viewActions.customers.isNotEmpty)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: GestureDetector(
+                  onTap: () {
+                    viewActions.filterIsCustomerFavorite();
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: viewActions.isCustomerFilter.value
+                          ? HexColor.fromHex(ThemeColors.PRIMARY)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) =>
+                              ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
+                          child: Icon(
+                            viewActions.isCustomerFilter.value
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
+                            key: ValueKey<bool>(
+                                viewActions.isCustomerFilter.value),
+                            color: viewActions.isCustomerFilter.value
+                                ? Colors.white
+                                : HexColor.fromHex(ThemeColors.PRIMARY),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 300),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: viewActions.isCustomerFilter.value
+                                  ? Colors.white
+                                  : HexColor.fromHex(ThemeColors.PRIMARY),
+                            ),
+                            child: const Text("Khách hàng quan trọng")),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           Expanded(
             child: viewActions.customers.isEmpty
                 ? Center(
@@ -76,60 +139,71 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                           child: Text(
                             'Chưa có khách hàng. Thêm ngay!',
                             style: TextStyle(
-                                color: HexColor.fromHex(ThemeColors.PRIMARY),
-                                fontSize: 20),
+                              color: HexColor.fromHex(ThemeColors.PRIMARY),
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                        // This is a placeholder for the empty state of the customer list.
                         const SizedBox(height: 60),
                       ],
                     ),
                   )
-                : ReorderableListView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8),
-                    scrollController: viewActions.scrollController,
-                    itemCount: viewActions.filteredCustomer.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final customer = viewActions.filteredCustomer[index];
-                      return Slidable(
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(onDismissed: () {}),
-                          children: [
-                            SlidableAction(
-                              foregroundColor:
-                                  HexColor.fromHex(ThemeColors.PRIMARY),
-                              borderRadius: BorderRadius.circular(10),
-                              icon: Icons.delete,
-                              autoClose: true,
-                              spacing: 2,
-                              label: 'Xóa',
-                              onPressed: (BuildContext context) {
-                                _showDeleteConfirmationDialog(
-                                    context, customer.id!, customer.name!);
-                              },
+                : viewActions.filteredCustomer.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Không có kết quả',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )
+                    : ReorderableListView.builder(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8),
+                        scrollController: viewActions.scrollController,
+                        itemCount: viewActions.filteredCustomer.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final customer = viewActions.filteredCustomer[index];
+                          return Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              dismissible: DismissiblePane(onDismissed: () {}),
+                              children: [
+                                SlidableAction(
+                                  foregroundColor:
+                                      HexColor.fromHex(ThemeColors.PRIMARY),
+                                  borderRadius: BorderRadius.circular(10),
+                                  icon: Icons.delete,
+                                  autoClose: true,
+                                  spacing: 2,
+                                  label: 'Xóa',
+                                  onPressed: (BuildContext context) {
+                                    _showDeleteConfirmationDialog(
+                                        context, customer.id!, customer.name!);
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        key: ValueKey(customer.id),
-                        child: CustomerComponent(
-                          customer: customer,
-                          onFavoritePressed: (id) => viewActions
-                              .updateIsFavorite(id, !customer.isFavorite),
-                          onCallPressed: (String phone) =>
-                              viewActions.callCustomerPhone(customer.phone),
-                          onEditPressed: (Customer customer) =>
-                              _goToEditCustomer(customer),
-                          onMapPressed: (String map) =>
-                              viewActions.openGoogleMaps(map),
-                        ),
-                      );
-                    },
-                    onReorder: (int oldIndex, int newIndex) {
-                      viewActions.reorderCustomer(oldIndex, newIndex);
-                    },
-                  ),
+                            key: ValueKey(customer.id),
+                            child: CustomerComponent(
+                              customer: customer,
+                              onFavoritePressed: (id) => viewActions
+                                  .updateIsFavorite(id, !customer.isFavorite),
+                              onCallPressed: (String phone) =>
+                                  viewActions.callCustomerPhone(customer.phone),
+                              onEditPressed: (Customer customer) =>
+                                  _goToEditCustomer(customer),
+                              onMapPressed: (String map) =>
+                                  viewActions.openGoogleMaps(map),
+                            ),
+                          );
+                        },
+                        onReorder: (int oldIndex, int newIndex) {
+                          viewActions.reorderCustomer(oldIndex, newIndex);
+                        },
+                      ),
           )
         ],
       ),
@@ -255,7 +329,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
         controller: textEditingController,
         style: Theme.of(context)
             .textTheme
-            .labelSmall!
+            .labelMedium!
             .copyWith(color: Colors.black),
         validator: validator,
         onTapOutside: (event) =>

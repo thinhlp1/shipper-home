@@ -23,6 +23,8 @@ class CustomerAction extends ViewActions {
   Timer? _debounce;
   final ScrollController scrollController = ScrollController();
 
+  RxBool isCustomerFilter = false.obs;
+
   @override
   initState() {
     loadData();
@@ -214,6 +216,23 @@ class CustomerAction extends ViewActions {
 
     Get.back();
     SnackbarUtil.showSuccessSnackbar('Thành công', 'Xóa thành công');
+  }
+
+  /// Toggles the customer filter and updates the list of filtered contacts.
+  ///
+  /// When the `isCustomerFilter` is set to `true`, the `filteredCustomer` list
+  /// is updated to include only contacts where `isFavorite` is `true`.
+  /// When the `isCustomerFilter` is set to `false`, the `filteredCustomer` list
+  /// is reset to include all contacts.
+  void filterIsCustomerFavorite() {
+    isCustomerFilter.value = !isCustomerFilter.value;
+    if (isCustomerFilter.value) {
+      filteredCustomer.value = customers.where((customer) {
+        return customer.isFavorite == true;
+      }).toList();
+    } else {
+      filteredCustomer.assignAll(customers);
+    }
   }
 
   /// Opens Google Maps at the specified latitude and longitude.

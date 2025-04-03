@@ -158,7 +158,7 @@ class _CustomerComponenttState
                                         : customer.phone,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .labelSmall!
+                                        .labelMedium!
                                         .copyWith(fontWeight: FontWeight.bold),
                                     overflow: TextOverflow.ellipsis),
                                 const SizedBox(width: 8),
@@ -172,7 +172,7 @@ class _CustomerComponenttState
                         Text(customer.phone,
                             style: Theme.of(context)
                                 .textTheme
-                                .labelSmall!
+                                .labelMedium!
                                 .copyWith(fontWeight: FontWeight.bold)),
                       if (customer.note.isEmpty && customer.address.isEmpty)
                         Text('Chưa cập nhật',

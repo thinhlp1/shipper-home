@@ -42,6 +42,70 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
               TextFieldValidation.validName,
             ),
             const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: GestureDetector(
+                  onTap: () {
+                    viewActions.filterIsCustomer();
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: viewActions.isCustomerFilter.value
+                          ? HexColor.fromHex(ThemeColors.PRIMARY)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: HexColor.fromHex(ThemeColors.PRIMARY),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          transitionBuilder: (child, animation) =>
+                              ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
+                          child: Icon(
+                            viewActions.isCustomerFilter.value
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
+                            key: ValueKey<bool>(
+                                viewActions.isCustomerFilter.value),
+                            color: viewActions.isCustomerFilter.value
+                                ? Colors.white
+                                : HexColor.fromHex(ThemeColors.PRIMARY),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 300),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: viewActions.isCustomerFilter.value
+                                  ? Colors.white
+                                  : HexColor.fromHex(ThemeColors.PRIMARY),
+                            ),
+                            child: const Text("Chỉ hiển thị khách hàng")),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
             viewActions.contactsLoaded.value
                 ? Expanded(
                     child: viewActions.filteredContacts.isEmpty

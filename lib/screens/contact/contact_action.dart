@@ -7,7 +7,6 @@ import 'package:base/models/user_contact.dart';
 import 'package:base/screens/customer/add_customer/add_customer_view.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/third_service/call_service.dart';
-import 'package:base/utils/dialog_util.dart';
 import 'package:base/utils/perrmission_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,7 +18,10 @@ class ContactAction extends ViewActions {
   RxList<UserContact> filteredContacts = <UserContact>[].obs;
   List<UserContact> contactsFiltered = [];
   List<Customer> customers = <Customer>[].obs;
+
   RxBool contactsLoaded = false.obs;
+  RxBool isCustomerFilter = false.obs;
+
   Timer? _debounce;
 
   final CustomerService _customerService = CustomerService();
@@ -70,11 +72,17 @@ class ContactAction extends ViewActions {
         bool isCustomer = false;
         int? customerId;
         for (var customer in customers) {
-          if (contact.phones.isNotEmpty &&
-              customer.phone == contact.phones.first.number) {
-            isCustomer = true;
-            customerId = customer.id;
-            break;
+          if (contact.phones.isNotEmpty) {
+            String contactPhone =
+                contact.phones.first.number.replaceAll(' ', '');
+            if (contactPhone.startsWith('+84')) {
+              contactPhone = contactPhone.replaceFirst('+84', '0');
+            }
+            if (contactPhone == customer.phone.replaceAll(' ', '')) {
+              isCustomer = true;
+              customerId = customer.id;
+              break;
+            }
           }
         }
 
@@ -109,14 +117,17 @@ class ContactAction extends ViewActions {
   /// - [name]: The name of the customer.
   /// - [phone]: The phone number of the customer.
   void goToAddCustomer(String name, String phone) {
+    String phoneNumber = phone.replaceFirst('+84', '0');
+    phoneNumber = phoneNumber.replaceAll(' ', '');
     Customer customer = Customer(
         name: name,
-        phone: phone,
+        phone: phoneNumber,
         note: '',
         map: '',
         address: '',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now());
+
     Get.to(() => AddCustomerView(
               customer: customer,
               position: customers.length + 1,
@@ -124,9 +135,14 @@ class ContactAction extends ViewActions {
             ))!
         .then((result) {
       if (result != null) {
-        contacts
-            .where((contact) => contact.contact.phones.first.number == phone)
-            .forEach((contact) {
+        contacts.where((contact) {
+          String contactPhone =
+              contact.contact.phones.first.number.replaceAll(' ', '');
+          if (contactPhone.startsWith('+84')) {
+            contactPhone = contactPhone.replaceFirst('+84', '0');
+          }
+          return contactPhone == phoneNumber;
+        }).forEach((contact) {
           contact.isCustomer = true;
           contact.customerId = customer.id;
         });
@@ -170,6 +186,23 @@ class ContactAction extends ViewActions {
             contact.contact.phones.isNotEmpty &&
                 contact.contact.phones.first.number.contains(keyword);
       }).toList();
+    }
+  }
+
+  /// Toggles the customer filter and updates the list of filtered contacts.
+  ///
+  /// When the `isCustomerFilter` is set to `true`, the `filteredContacts` list
+  /// is updated to include only contacts where `isCustomer` is `true`.
+  /// When the `isCustomerFilter` is set to `false`, the `filteredContacts` list
+  /// is reset to include all contacts.
+  void filterIsCustomer() {
+    isCustomerFilter.value = !isCustomerFilter.value;
+    if (isCustomerFilter.value) {
+      filteredContacts.value = contacts.where((contact) {
+        return contact.isCustomer == true;
+      }).toList();
+    } else {
+      filteredContacts.assignAll(contacts);
     }
   }
 
