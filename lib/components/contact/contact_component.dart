@@ -225,18 +225,6 @@ class _ContactComponenttState
                                   ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            IconButton(
-                                onPressed: () => {},
-                                padding: const EdgeInsets.all(20),
-                                iconSize: 25,
-                                color: Colors.pink,
-                                icon: const Icon(Icons.edit)),
-                            Text("Chỉnh sửa",
-                                style: Theme.of(context).textTheme.labelSmall!),
-                          ],
-                        ),
                       ],
                     ),
                   )

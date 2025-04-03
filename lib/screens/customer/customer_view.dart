@@ -124,89 +124,96 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
             ),
           const SizedBox(height: 10),
           Expanded(
-            child: viewActions.customers.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 20),
-                        Image.asset(
-                          Assets.IMAGE_NO_CUSTOMERS,
-                          width: 300,
-                          height: 300,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _goToAddCustomer();
-                          },
-                          child: Text(
-                            'Chưa có khách hàng. Thêm ngay!',
-                            style: TextStyle(
-                              color: HexColor.fromHex(ThemeColors.PRIMARY),
-                              fontSize: 20,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await viewActions.fetchCustomers();
+              },
+              child: viewActions.customers.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 20),
+                          Image.asset(
+                            Assets.IMAGE_NO_CUSTOMERS,
+                            width: 300,
+                            height: 300,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _goToAddCustomer();
+                            },
+                            child: Text(
+                              'Chưa có khách hàng. Thêm ngay!',
+                              style: TextStyle(
+                                color: HexColor.fromHex(ThemeColors.PRIMARY),
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 60),
-                      ],
-                    ),
-                  )
-                : viewActions.filteredCustomer.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'Không có kết quả',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )
-                    : ReorderableListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(8),
-                        scrollController: viewActions.scrollController,
-                        itemCount: viewActions.filteredCustomer.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final customer = viewActions.filteredCustomer[index];
-                          return Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              dismissible: DismissiblePane(onDismissed: () {}),
-                              children: [
-                                SlidableAction(
-                                  foregroundColor:
-                                      HexColor.fromHex(ThemeColors.PRIMARY),
-                                  borderRadius: BorderRadius.circular(10),
-                                  icon: Icons.delete,
-                                  autoClose: true,
-                                  spacing: 2,
-                                  label: 'Xóa',
-                                  onPressed: (BuildContext context) {
-                                    _showDeleteConfirmationDialog(
-                                        context, customer.id!, customer.name!);
-                                  },
-                                ),
-                              ],
-                            ),
-                            key: ValueKey(customer.id),
-                            child: CustomerComponent(
-                              customer: customer,
-                              onFavoritePressed: (id) => viewActions
-                                  .updateIsFavorite(id, !customer.isFavorite),
-                              onCallPressed: (String phone) =>
-                                  viewActions.callCustomerPhone(customer.phone),
-                              onEditPressed: (Customer customer) =>
-                                  _goToEditCustomer(customer),
-                              onMapPressed: (String map) =>
-                                  viewActions.openGoogleMaps(map),
-                            ),
-                          );
-                        },
-                        onReorder: (int oldIndex, int newIndex) {
-                          viewActions.reorderCustomer(oldIndex, newIndex);
-                        },
+                          const SizedBox(height: 60),
+                        ],
                       ),
+                    )
+                  : viewActions.filteredCustomer.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Không có kết quả',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        )
+                      : ReorderableListView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(8),
+                          scrollController: viewActions.scrollController,
+                          itemCount: viewActions.filteredCustomer.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final customer =
+                                viewActions.filteredCustomer[index];
+                            return Slidable(
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                dismissible:
+                                    DismissiblePane(onDismissed: () {}),
+                                children: [
+                                  SlidableAction(
+                                    foregroundColor:
+                                        HexColor.fromHex(ThemeColors.PRIMARY),
+                                    borderRadius: BorderRadius.circular(10),
+                                    icon: Icons.delete,
+                                    autoClose: true,
+                                    spacing: 2,
+                                    label: 'Xóa',
+                                    onPressed: (BuildContext context) {
+                                      _showDeleteConfirmationDialog(context,
+                                          customer.id!, customer.name!);
+                                    },
+                                  ),
+                                ],
+                              ),
+                              key: ValueKey(customer.id),
+                              child: CustomerComponent(
+                                customer: customer,
+                                onFavoritePressed: (id) => viewActions
+                                    .updateIsFavorite(id, !customer.isFavorite),
+                                onCallPressed: (String phone) => viewActions
+                                    .callCustomerPhone(customer.phone),
+                                onEditPressed: (Customer customer) =>
+                                    _goToEditCustomer(customer),
+                                onMapPressed: (String map) =>
+                                    viewActions.openGoogleMaps(map),
+                              ),
+                            );
+                          },
+                          onReorder: (int oldIndex, int newIndex) {
+                            viewActions.reorderCustomer(oldIndex, newIndex);
+                          },
+                        ),
+            ),
           )
         ],
       ),
