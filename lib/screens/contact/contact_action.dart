@@ -136,12 +136,15 @@ class ContactAction extends ViewActions {
         .then((result) {
       if (result != null) {
         contacts.where((contact) {
-          String contactPhone =
-              contact.contact.phones.first.number.replaceAll(' ', '');
-          if (contactPhone.startsWith('+84')) {
-            contactPhone = contactPhone.replaceFirst('+84', '0');
+          if (contact.contact.phones.isNotEmpty) {
+            String contactPhone =
+                contact.contact.phones.first.number.replaceAll(' ', '');
+            if (contactPhone.startsWith('+84')) {
+              contactPhone = contactPhone.replaceFirst('+84', '0');
+            }
+            return contactPhone == phoneNumber;
           }
-          return contactPhone == phoneNumber;
+          return false;
         }).forEach((contact) {
           contact.isCustomer = true;
           contact.customerId = customer.id;

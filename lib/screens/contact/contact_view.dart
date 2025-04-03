@@ -42,73 +42,73 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
               TextFieldValidation.validName,
             ),
             const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    viewActions.filterIsCustomer();
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: viewActions.isCustomerFilter.value
-                          ? HexColor.fromHex(ThemeColors.PRIMARY)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: HexColor.fromHex(ThemeColors.PRIMARY),
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          transitionBuilder: (child, animation) =>
-                              ScaleTransition(
-                            scale: animation,
-                            child: child,
-                          ),
-                          child: Icon(
-                            viewActions.isCustomerFilter.value
-                                ? Icons.check_circle
-                                : Icons.radio_button_unchecked,
-                            key: ValueKey<bool>(
-                                viewActions.isCustomerFilter.value),
-                            color: viewActions.isCustomerFilter.value
-                                ? Colors.white
-                                : HexColor.fromHex(ThemeColors.PRIMARY),
-                          ),
+            if (viewActions.contacts.isNotEmpty)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      viewActions.filterIsCustomer();
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: viewActions.isCustomerFilter.value
+                            ? HexColor.fromHex(ThemeColors.PRIMARY)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: HexColor.fromHex(ThemeColors.PRIMARY),
+                          width: 1,
                         ),
-                        const SizedBox(width: 8),
-                        AnimatedDefaultTextStyle(
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AnimatedSwitcher(
                             duration: const Duration(milliseconds: 300),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
+                            transitionBuilder: (child, animation) =>
+                                ScaleTransition(
+                              scale: animation,
+                              child: child,
+                            ),
+                            child: Icon(
+                              viewActions.isCustomerFilter.value
+                                  ? Icons.check_circle
+                                  : Icons.radio_button_unchecked,
+                              key: ValueKey<bool>(
+                                  viewActions.isCustomerFilter.value),
                               color: viewActions.isCustomerFilter.value
                                   ? Colors.white
                                   : HexColor.fromHex(ThemeColors.PRIMARY),
                             ),
-                            child: const Text("Chỉ hiển thị khách hàng")),
-                      ],
+                          ),
+                          const SizedBox(width: 8),
+                          AnimatedDefaultTextStyle(
+                              duration: const Duration(milliseconds: 300),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: viewActions.isCustomerFilter.value
+                                    ? Colors.white
+                                    : HexColor.fromHex(ThemeColors.PRIMARY),
+                              ),
+                              child: const Text("Chỉ hiển thị khách hàng")),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-
             const SizedBox(height: 10),
             viewActions.contactsLoaded.value
                 ? Expanded(
-                    child: viewActions.filteredContacts.isEmpty
+                    child: viewActions.contacts.isEmpty
                         ? Center(
                             child: GestureDetector(
                               onTap: () {
@@ -123,44 +123,57 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
                               ),
                             ),
                           )
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            shrinkWrap: true,
-                            itemCount: viewActions.filteredContacts.length,
-                            itemBuilder: (context, index) {
-                              final contact =
-                                  viewActions.filteredContacts[index].contact;
-                              return Slidable(
-                                endActionPane: ActionPane(
-                                  motion: const ScrollMotion(),
-                                  dismissible:
-                                      DismissiblePane(onDismissed: () {}),
-                                  children: [
-                                    SlidableAction(
-                                      foregroundColor:
+                        : viewActions.filteredContacts.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'Không tìm thấy liên hệ',
+                                  style: TextStyle(
+                                      color:
                                           HexColor.fromHex(ThemeColors.PRIMARY),
-                                      borderRadius: BorderRadius.circular(10),
-                                      icon: Icons.delete,
-                                      autoClose: true,
-                                      spacing: 2,
-                                      label: 'Xóa',
-                                      onPressed: (BuildContext context) {},
+                                      fontSize: 20),
+                                ),
+                              )
+                            : ListView.builder(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                shrinkWrap: true,
+                                itemCount: viewActions.filteredContacts.length,
+                                itemBuilder: (context, index) {
+                                  final contact = viewActions
+                                      .filteredContacts[index].contact;
+                                  return Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: const ScrollMotion(),
+                                      dismissible:
+                                          DismissiblePane(onDismissed: () {}),
+                                      children: [
+                                        SlidableAction(
+                                          foregroundColor: HexColor.fromHex(
+                                              ThemeColors.PRIMARY),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          icon: Icons.delete,
+                                          autoClose: true,
+                                          spacing: 2,
+                                          label: 'Xóa',
+                                          onPressed: (BuildContext context) {},
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                key: ValueKey(contact.id),
-                                child: ContactComponent(
-                                  userContact:
-                                      viewActions.filteredContacts[index],
-                                  onAddCustomerPressed: (name, phone) {
-                                    viewActions.goToAddCustomer(name, phone);
-                                  },
-                                  onCallPressed: (String phone) =>
-                                      viewActions.callCustomerPhone(phone),
-                                ),
-                              );
-                            },
-                          ),
+                                    key: ValueKey(contact.id),
+                                    child: ContactComponent(
+                                      userContact:
+                                          viewActions.filteredContacts[index],
+                                      onAddCustomerPressed: (name, phone) {
+                                        viewActions.goToAddCustomer(
+                                            name, phone);
+                                      },
+                                      onCallPressed: (String phone) =>
+                                          viewActions.callCustomerPhone(phone),
+                                    ),
+                                  );
+                                },
+                              ),
                   )
                 : const Padding(
                     padding: EdgeInsets.only(top: 100),
@@ -184,7 +197,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
         controller: textEditingController,
         style: Theme.of(context)
             .textTheme
-            .labelSmall!
+            .labelMedium!
             .copyWith(color: Colors.black),
         validator: validator,
         onTapOutside: (event) =>

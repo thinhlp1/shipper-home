@@ -120,6 +120,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
                 ),
               ),
             ),
+          const SizedBox(height: 10),
           Expanded(
             child: viewActions.customers.isEmpty
                 ? Center(

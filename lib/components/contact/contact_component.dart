@@ -85,30 +85,33 @@ class _ContactComponenttState
                     children: [
                       ContactAvatar(widget.userContact, 40),
                       const SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              userContact.contact.displayName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                userContact.contact.displayName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            contact.phones.isNotEmpty
-                                ? contact.phones.first.number
-                                : 'Không có số điện thoại',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                          const SizedBox(height: 4),
-                        ],
+                            const SizedBox(height: 4),
+                            Text(
+                              contact.phones.isNotEmpty
+                                  ? contact.phones.first.number
+                                  : 'Không có số điện thoại',
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                            const SizedBox(height: 4),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -145,12 +148,12 @@ class _ContactComponenttState
                           children: [
                             IconButton(
                                 onPressed: () => {
-                                  widget.onCallPressed(
-                                    contact.phones.isNotEmpty
-                                        ? contact.phones.first.number
-                                        : '',
-                                  )
-                                },
+                                      widget.onCallPressed(
+                                        contact.phones.isNotEmpty
+                                            ? contact.phones.first.number
+                                            : '',
+                                      )
+                                    },
                                 iconSize: 25,
                                 color: Colors.blue,
                                 icon: const Icon(Icons.call)),
