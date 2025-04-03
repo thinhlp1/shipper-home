@@ -77,18 +77,18 @@ class ContactAction extends ViewActions {
         if (colorIndex == _colors.length) {
           colorIndex = 0;
         }
+        if (contact.phones.isNotEmpty) {
+          contact.phones.first.number =
+              replacePhoneNumber(contact.phones.first.number);
+        }
 
         // Check if contact phone number is in the list of customers
         bool isCustomer = false;
         int? customerId;
         for (var customer in customers) {
           if (contact.phones.isNotEmpty) {
-            String contactPhone =
-                contact.phones.first.number.replaceAll(' ', '');
-            if (contactPhone.startsWith(_numerPhonePrefix)) {
-              contactPhone = contactPhone.replaceFirst(_numerPhonePrefix, '0');
-            }
-            if (contactPhone == customer.phone.replaceAll(' ', '')) {
+            if (contact.phones.first.number ==
+                replacePhoneNumber(customer.phone)) {
               isCustomer = true;
               customerId = customer.id;
               break;
@@ -127,8 +127,7 @@ class ContactAction extends ViewActions {
   /// - [name]: The name of the customer.
   /// - [phone]: The phone number of the customer.
   void goToAddCustomer(String name, String phone) {
-    String phoneNumber = phone.replaceFirst(_numerPhonePrefix, '0');
-    phoneNumber = phoneNumber.replaceAll(' ', '');
+    String phoneNumber = replacePhoneNumber(phone);
     Customer customer = Customer(
         name: name,
         phone: phoneNumber,
@@ -148,10 +147,7 @@ class ContactAction extends ViewActions {
         contacts.where((contact) {
           if (contact.contact.phones.isNotEmpty) {
             String contactPhone =
-                contact.contact.phones.first.number.replaceAll(' ', '');
-            if (contactPhone.startsWith(_numerPhonePrefix)) {
-              contactPhone = contactPhone.replaceFirst(_numerPhonePrefix, '0');
-            }
+                replacePhoneNumber(contact.contact.phones.first.number);
             return contactPhone == phoneNumber;
           }
           return false;
@@ -193,11 +189,14 @@ class ContactAction extends ViewActions {
       filteredContacts.assignAll(contacts);
     } else {
       filteredContacts.value = contacts.where((contact) {
+        String formattedPhone = contact.contact.phones.isNotEmpty
+            ? contact.contact.phones.first.number
+            : '';
+        String keywordFormatted = replacePhoneNumber(keyword);
         return contact.contact.displayName
                 .toLowerCase()
                 .contains(keyword.toLowerCase()) ||
-            contact.contact.phones.isNotEmpty &&
-                contact.contact.phones.first.number.contains(keyword);
+            formattedPhone.contains(keywordFormatted);
       }).toList();
     }
   }
@@ -217,6 +216,12 @@ class ContactAction extends ViewActions {
     } else {
       filteredContacts.assignAll(contacts);
     }
+  }
+
+  /// Replaces the phone number prefix with '0' and removes spaces from the phone number.
+  String replacePhoneNumber(String phone) {
+    String phoneNumber = phone.replaceFirst(_numerPhonePrefix, '0');
+    return phoneNumber.replaceAll(' ', '');
   }
 
   /// Opens the phone dialer with the specified phone number.
