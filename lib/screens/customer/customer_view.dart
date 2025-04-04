@@ -331,7 +331,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
       ),
       child: TextFormField(
         controller: textEditingController,
@@ -362,11 +362,11 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
               : null,
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(30.0),
             borderSide: const BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(30.0),
             borderSide:
                 BorderSide(color: HexColor.fromHex(ThemeColors.PRIMARY)),
           ),

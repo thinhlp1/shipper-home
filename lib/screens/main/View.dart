@@ -29,6 +29,11 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
         selectedItemColor: HexColor.fromHex(ThemeColors.PRIMARY),
         unselectedItemColor: HexColor.fromHex(ThemeColors.GREY),
         type: BottomNavigationBarType.fixed,
+        selectedIconTheme: const IconThemeData(size: 25),
+        selectedLabelStyle: const TextStyle(
+          fontSize: 16,
+        ),
+        unselectedLabelStyle: const TextStyle(fontSize: 16),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -37,7 +42,7 @@ class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: "Danh bạ",
-          )
+          ),
         ],
         onTap: Get.find<GlobalStore>().handleChangeViews,
         currentIndex: context.watch<GlobalStore>().tabIndex,
