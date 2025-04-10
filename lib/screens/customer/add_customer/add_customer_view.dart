@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:base/config/view_widget.dart';
+import 'package:base/screens/guide/add_guide_screen.dart';
+import 'package:base/screens/guide/customer_guide_screen.dart';
 import 'package:base/utils/assets.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
@@ -45,6 +47,14 @@ class _AddCustomerViewState
         title: Text(widget.customer != null && !widget.isAddFromContact
             ? 'Cập nhật khách hàng'
             : 'Thêm khách hàng'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () {
+              Get.to(const AddGuideScreen());
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

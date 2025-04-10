@@ -1,11 +1,14 @@
 import 'package:base/components/contact/contact_component.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/screens/contact/contact_action.dart';
+import 'package:base/screens/guide/contact_guide_screen.dart';
+import 'package:base/screens/guide/customer_guide_screen.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 
@@ -32,10 +35,18 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.help_outline),
+              onPressed: () {
+                Get.to(const ContactGuideScreen());
+              },
+            ),
+          ],
         ),
         body: Column(
           children: [
+            const SizedBox(height: 10),
             _buildTextFormFied(
               "Tìm kiếm liên hệ",
               viewActions.searchController.value,
