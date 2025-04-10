@@ -58,67 +58,108 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
           ),
           const SizedBox(height: 10),
           if (viewActions.customers.isNotEmpty)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    viewActions.filterIsCustomerFavorite();
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: viewActions.isCustomerFilter.value
-                          ? HexColor.fromHex(ThemeColors.PRIMARY)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: HexColor.fromHex(ThemeColors.PRIMARY),
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          transitionBuilder: (child, animation) =>
-                              ScaleTransition(
-                            scale: animation,
-                            child: child,
-                          ),
-                          child: Icon(
-                            viewActions.isCustomerFilter.value
-                                ? Icons.check_circle
-                                : Icons.radio_button_unchecked,
-                            key: ValueKey<bool>(
-                                viewActions.isCustomerFilter.value),
-                            color: viewActions.isCustomerFilter.value
-                                ? Colors.white
-                                : HexColor.fromHex(ThemeColors.PRIMARY),
+            Row(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        viewActions.filterIsCustomerFavorite();
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: viewActions.isCustomerFilter.value
+                              ? HexColor.fromHex(ThemeColors.PRIMARY)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: HexColor.fromHex(ThemeColors.PRIMARY),
+                            width: 1,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        AnimatedDefaultTextStyle(
-                            duration: const Duration(milliseconds: 300),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: viewActions.isCustomerFilter.value
-                                  ? Colors.white
-                                  : HexColor.fromHex(ThemeColors.PRIMARY),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (child, animation) =>
+                                  ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              ),
+                              child: Icon(
+                                viewActions.isCustomerFilter.value
+                                    ? Icons.check_circle
+                                    : Icons.radio_button_unchecked,
+                                key: ValueKey<bool>(
+                                    viewActions.isCustomerFilter.value),
+                                color: viewActions.isCustomerFilter.value
+                                    ? Colors.white
+                                    : HexColor.fromHex(ThemeColors.PRIMARY),
+                              ),
                             ),
-                            child: const Text("Khách hàng quan trọng")),
-                      ],
+                            const SizedBox(width: 8),
+                            AnimatedDefaultTextStyle(
+                              duration: const Duration(milliseconds: 300),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: viewActions.isCustomerFilter.value
+                                    ? Colors.white
+                                    : HexColor.fromHex(ThemeColors.PRIMARY),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text("Khách hàng quan trọng"),
+                                  const SizedBox(width: 6),
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 2),
+                                      Text(
+                                        '${viewActions.favoriteCount}',
+                                        style: const TextStyle(
+                                          color: Colors.amber,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Tổng KH: ${viewActions.customers.length}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: HexColor.fromHex(ThemeColors.PRIMARY),
+                    ),
+                  ),
+                )
+              ],
             ),
           const SizedBox(height: 10),
           Expanded(

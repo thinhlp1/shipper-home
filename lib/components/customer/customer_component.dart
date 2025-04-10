@@ -187,7 +187,7 @@ class _CustomerComponenttState
                                 .labelMedium!
                                 .copyWith(fontWeight: FontWeight.bold)),
                       if (customer.note.isEmpty && customer.address.isEmpty)
-                        Text('Chưa cập nhật',
+                        Text('Chưa lưu thông tin',
                             style: Theme.of(context).textTheme.labelSmall),
                       const SizedBox(height: 4),
                       Text(customer.address,

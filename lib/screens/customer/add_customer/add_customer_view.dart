@@ -384,9 +384,20 @@ class _AddCustomerViewState
                             right: 5,
                             child: GestureDetector(
                               onTap: () => viewActions.removeImage(index),
-                              child: Icon(
-                                Icons.cancel,
-                                color: HexColor.fromHex(ThemeColors.GREY),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.6),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.cancel,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                               ),
                             ),
                           ),
@@ -398,9 +409,10 @@ class _AddCustomerViewState
               }),
               const SizedBox(height: 20),
               TextButton(
-                onPressed: () => widget.customer != null && !widget.isAddFromContact
-                    ? viewActions.updateCustomer(widget.customer!)
-                    : viewActions.addCustomer(widget.position),
+                onPressed: () =>
+                    widget.customer != null && !widget.isAddFromContact
+                        ? viewActions.updateCustomer(widget.customer!)
+                        : viewActions.addCustomer(widget.position),
                 style: TextButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

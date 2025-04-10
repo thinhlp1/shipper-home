@@ -24,6 +24,7 @@ class CustomerAction extends ViewActions {
   final ScrollController scrollController = ScrollController();
 
   RxBool isCustomerFilter = false.obs;
+  RxInt favoriteCount = 0.obs;
 
   @override
   initState() {
@@ -40,6 +41,8 @@ class CustomerAction extends ViewActions {
   Future<void> fetchCustomers() async {
     customers.value = (await _customerService.getCustomers()).cast<Customer>();
     filteredCustomer.assignAll(customers);
+    favoriteCount.value =
+        customers.where((customer) => customer.isFavorite).length;
   }
 
   /// Load the last customer added
@@ -100,6 +103,9 @@ class CustomerAction extends ViewActions {
     if (filteredCustomer.length == customers.length) {
       filteredCustomer.assignAll(customers);
     }
+
+    // Update favorite count
+    favoriteCount.value += isFavorite ? 1 : -1;
 
     // Update positions in the database
     _customerService.updateCustomerPositions(customers);
@@ -279,15 +285,5 @@ class CustomerAction extends ViewActions {
         curve: Curves.easeOut,
       );
     });
-  }
-
-  void callCustomer(int id) {
-    print("Call customer with id: $id");
-    final customer = customers.firstWhere((element) => element.id == id);
-    print("Call to: ${customer.phone}");
-  }
-
-  void openCart() {
-    print("Navigator to cart");
   }
 }

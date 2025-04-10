@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 class ContactAction extends ViewActions {
   RxList<UserContact> contacts = <UserContact>[].obs;
@@ -21,6 +22,7 @@ class ContactAction extends ViewActions {
 
   RxBool contactsLoaded = false.obs;
   RxBool isCustomerFilter = false.obs;
+  RxInt customerCount = 0.obs;
 
   Timer? _debounce;
 
@@ -91,6 +93,9 @@ class ContactAction extends ViewActions {
                 replacePhoneNumber(customer.phone)) {
               isCustomer = true;
               customerId = customer.id;
+
+              //Count customer
+              customerCount.value++;
               break;
             }
           }
@@ -154,6 +159,7 @@ class ContactAction extends ViewActions {
         }).forEach((contact) {
           contact.isCustomer = true;
           contact.customerId = customer.id;
+          customerCount.value++;
         });
         filteredContacts.assignAll(contacts);
         filteredContacts.refresh(); // Notify the UI to update the contact list
