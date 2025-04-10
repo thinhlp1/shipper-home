@@ -1,14 +1,35 @@
 import 'package:base/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
 
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  String version = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      version = info.version;
+    });
+  }
+
   void _launchUrl(String url) async {
-    final Uri uri = Uri.parse(url);
+    final uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw 'Could not launch $url';
+      throw 'Không thể mở $url';
     }
   }
 
@@ -50,22 +71,23 @@ class AboutScreen extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.email),
-              title: const Text('lephuoccthinh@gmail.com'),
-              onTap: () => _launchUrl('mailto:lephuoccthinh@gmail.com'),
+              title: const Text('shipper.home.app@gmail.com'),
+              onTap: () => _launchUrl('mailto:shipper.home.app@gmail.com'),
             ),
             ListTile(
               leading: const Icon(Icons.facebook, color: Colors.blue),
-              title: const Text('Facebook cá nhân'),
+              title: const Text('Fanpage Facebook'),
               onTap: () => _launchUrl(
-                  'https://www.facebook.com/le.phuoc.thinh.146779/?locale=vi_VN'),
+                  'https://www.facebook.com/profile.php?id=61575337190094'),
             ),
             const Spacer(),
-            const Center(
-              child: Text(
-                'Phiên bản 1.0.0',
-                style: TextStyle(color: Colors.grey),
+            if (version.isNotEmpty)
+              Center(
+                child: Text(
+                  'Phiên bản $version',
+                  style: const TextStyle(color: Colors.grey),
+                ),
               ),
-            ),
             const SizedBox(height: 10),
             const Center(
               child: Text(

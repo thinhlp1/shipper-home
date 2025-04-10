@@ -1,6 +1,8 @@
+import 'package:base/screens/guide/info_screen.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddGuideScreen extends StatelessWidget {
   const AddGuideScreen({super.key});
@@ -10,6 +12,14 @@ class AddGuideScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hướng dẫn sử dụng'),
+         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () {
+              Get.to(const AboutScreen());
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
