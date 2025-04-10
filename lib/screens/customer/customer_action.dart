@@ -11,7 +11,6 @@ import 'package:base/third_service/google_map_service.dart';
 import 'package:base/utils/snackbar_util.dart';
 import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/diacritics.dart';
 import 'package:get/get.dart';
 
 class CustomerAction extends ViewActions {

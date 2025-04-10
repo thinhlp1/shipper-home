@@ -137,7 +137,7 @@ class DatabaseService {
       ''');
 
         // **Inser default data**
-        // await insertTestData(db);
+        insertDefaultData(db);
       },
     );
   }
@@ -195,11 +195,11 @@ class DatabaseService {
   Future<void> insertDefaultData(Database db) async {
     // Chèn khách hàng mẫu
     int customer1Id = await db.insert(DBTable.customer, {
-      DBCustomerColumn.name: 'Nguyễn Văn A',
+      DBCustomerColumn.name: 'lê Phước Thịnh',
       DBCustomerColumn.phone: '0334831013',
       DBCustomerColumn.note: 'Khách VIP',
       DBCustomerColumn.map: '',
-      DBCustomerColumn.address: 'Hà Nội',
+      DBCustomerColumn.address: 'số 215 đường 3/2, hẻm thứ 2 quẹo trái',
       DBCustomerColumn.position: 1,
       DBCustomerColumn.isFavorite: 1,
       DBCustomerColumn.deleted: 0,
@@ -207,7 +207,7 @@ class DatabaseService {
 
     await db.insert(DBTable.customer, {
       DBCustomerColumn.name: 'Trần Thị B',
-      DBCustomerColumn.phone: '0334831013',
+      DBCustomerColumn.phone: '0222244444',
       DBCustomerColumn.note: 'Khách mới',
       DBCustomerColumn.map: '',
       DBCustomerColumn.address: 'Hồ Chí Minh',
@@ -219,7 +219,7 @@ class DatabaseService {
     // Chèn file mẫu
     int file1Id = await db.insert(DBTable.file, {
       DBFileColumn.link:
-          'https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474085JOs/hinh-anh-ngo-nghinh-va-dang-yeu-ve-dong-vat_102856847.jpg',
+          'https://thanhvietcorp.vn/uploads/images/Bao%20chi/cac-mau-nha-vuon-dep.jpg',
       DBFileColumn.name: 'Hình 1',
       DBFileColumn.extention: 'jpg',
       DBFileColumn.size: 200,
@@ -227,7 +227,7 @@ class DatabaseService {
 
     int file2Id = await db.insert(DBTable.file, {
       DBFileColumn.link:
-          'https://cdn-media.sforum.vn/storage/app/media/thanhhuyen/%E1%BA%A3nh%20%C4%91%E1%BB%99ng%20v%E1%BA%ADt/3/anh-dong-vat-37.jpg',
+          'https://thanhvietcorp.vn/uploads/images/Bao%20chi/download-hinh-ngoi-nha-1024x684.jpg',
       DBFileColumn.name: 'Hình 2',
       DBFileColumn.extention: 'jpg',
       DBFileColumn.size: 200,
