@@ -14,6 +14,14 @@ Shipper Home is a mobile app designed for shippers to manage their customers eff
 - **Connect to Google Map**: Get customer position in google map, quickly find customers
 - **Connect to Phone Book**: Connect with your phonebook, move it to my app now.
 
+### 📸 Screenshots
+
+<p float="left">
+  <img src="assets/images/guide/customer.png" width="200" />
+  <img src="assets/images/guide/contact.jpg" width="200" />
+  <img src="assets/images/guide/add_customer.png" width="200" />
+</p>
+
 # 📥 Download My App
 
 <p align="center">
