@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/diacritics.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
@@ -115,5 +116,22 @@ class Utils {
   /// - Returns: A string representing the formatted currency.
   static formatCurrency(num number) {
     return NumberFormat.currency(locale: 'vi_VN').format(number);
+  }
+
+  /// Normalizes a keyword by performing the following transformations:
+  /// - Removes all spaces from the input string.
+  /// - Replaces the country code prefix '+84' with '0'.
+  /// - Removes diacritics (accents) from the input string.
+  /// - Converts the resulting string to lowercase.
+  ///
+  /// This function is useful for standardizing input strings for comparison
+  /// or search purposes.
+  ///
+  /// [input] The string to be normalized.
+  /// Returns the normalized string.
+  static String normalizeKeyword(String input) {
+    input = input.replaceAll(' ', '');
+    input = input.replaceFirst('+84', '0');
+    return removeDiacritics(input).toLowerCase();
   }
 }

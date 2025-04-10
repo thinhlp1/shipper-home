@@ -8,6 +8,7 @@ import 'package:base/screens/customer/add_customer/add_customer_view.dart';
 import 'package:base/service/customer_service.dart';
 import 'package:base/third_service/call_service.dart';
 import 'package:base/utils/perrmission_util.dart';
+import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -194,14 +195,13 @@ class ContactAction extends ViewActions {
     if (keyword.isEmpty) {
       filteredContacts.assignAll(contacts);
     } else {
-      String keywordFormatted = replacePhoneNumber(keyword);
+      String keywordFormatted = Utils.normalizeKeyword(keyword);
       filteredContacts.value = contacts.where((contact) {
         String formattedPhone = contact.contact.phones.isNotEmpty
-            ? contact.contact.phones.first.number
+            ? Utils.normalizeKeyword(contact.contact.phones.first.number)
             : '';
-        return contact.contact.displayName
-                .toLowerCase()
-                .contains(keyword.toLowerCase()) ||
+        return Utils.normalizeKeyword(contact.contact.displayName)
+                .contains(keywordFormatted) ||
             formattedPhone.contains(keywordFormatted);
       }).toList();
     }

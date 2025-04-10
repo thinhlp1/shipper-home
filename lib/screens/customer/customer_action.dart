@@ -9,7 +9,9 @@ import 'package:base/service/database_service.dart';
 import 'package:base/third_service/call_service.dart';
 import 'package:base/third_service/google_map_service.dart';
 import 'package:base/utils/snackbar_util.dart';
+import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/diacritics.dart';
 import 'package:get/get.dart';
 
 class CustomerAction extends ViewActions {
@@ -191,12 +193,11 @@ class CustomerAction extends ViewActions {
     if (keyword.isEmpty) {
       filteredCustomer.assignAll(customers);
     } else {
-      keyword = keyword.replaceAll(' ', '');
-      keyword = keyword.replaceFirst('+84', '0');
+      keyword = Utils.normalizeKeyword(keyword);
       filteredCustomer.value = customers.where((customer) {
-        return customer.name!.toLowerCase().contains(keyword.toLowerCase()) ||
+        return Utils.normalizeKeyword(customer.name!).contains(keyword) ||
             customer.phone.contains(keyword) ||
-            customer.address.toLowerCase().contains(keyword.toLowerCase());
+            Utils.normalizeKeyword(customer.address).contains(keyword);
       }).toList();
     }
   }
