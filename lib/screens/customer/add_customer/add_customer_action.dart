@@ -135,7 +135,7 @@ class AddCustomerAction extends ViewActions {
         Get.back();
       }
       Get.back(result: true);
-      SnackbarUtil.showSuccessSnackbar('Thành công', 'Thêm thành công');
+      SnackbarUtil.showSuccessSnackbar('Thêm thành công', 'Đã thêm thành công');
     }
   }
 
@@ -203,7 +203,8 @@ class AddCustomerAction extends ViewActions {
         Get.back();
       }
       Get.back(result: true);
-      SnackbarUtil.showSuccessSnackbar('Thành công', 'Cập nhật thành công');
+      SnackbarUtil.showSuccessSnackbar(
+          'Sửa thành công', 'Đã cập nhật thành công');
     }
   }
 

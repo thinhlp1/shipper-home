@@ -70,6 +70,7 @@ class ContactAction extends ViewActions {
   /// - `Exception` if there is an error fetching the contacts.
   Future<void> fetchContacts() async {
     int colorIndex = 0;
+    customerCount.value = 0;
     if (await PermissionUtil.checkContactPermissions()) {
       List<UserContact> fetchedContacts =
           (await FlutterContacts.getContacts(withProperties: true))

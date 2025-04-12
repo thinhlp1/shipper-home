@@ -110,7 +110,8 @@ class CustomerAction extends ViewActions {
 
     // Update positions in the database
     _customerService.updateCustomerPositions(customers);
-    SnackbarUtil.showFavoriteSnackbar('Thành công',
+    SnackbarUtil.showFavoriteSnackbar(
+        isFavorite ? 'Đã đánh dấu' : 'Đã bỏ đánh dấu',
         isFavorite ? 'Đã đánh dấu là quan trọng' : 'Đã bỏ quan trọng');
   }
 
@@ -223,7 +224,7 @@ class CustomerAction extends ViewActions {
     filteredCustomer.removeWhere((element) => element.id == id);
 
     Get.back();
-    SnackbarUtil.showSuccessSnackbar('Thành công', 'Xóa thành công');
+    SnackbarUtil.showSuccessSnackbar('Xóa thành công', 'Đã xóa khách hàng');
   }
 
   /// Toggles the customer filter and updates the list of filtered contacts.

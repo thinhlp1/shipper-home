@@ -12,6 +12,7 @@ class SnackbarUtil {
       colorText: Colors.green.shade700,
       duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+      backgroundColor: Colors.white,
     );
   }
 
@@ -25,6 +26,7 @@ class SnackbarUtil {
       colorText: Colors.red.shade700,
       duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+      backgroundColor: Colors.white,
     );
   }
 
@@ -38,6 +40,7 @@ class SnackbarUtil {
       colorText: Colors.orange.shade700,
       duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+      backgroundColor: Colors.white,
     );
   }
 
@@ -51,6 +54,7 @@ class SnackbarUtil {
       colorText: Colors.blue.shade700,
       duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+      backgroundColor: Colors.white,
     );
   }
 
@@ -67,6 +71,7 @@ class SnackbarUtil {
       colorText: Colors.pink.shade700,
       duration: const Duration(milliseconds: 1500),
       margin: const EdgeInsets.only(top: 20, right: 10, left: 10),
+      backgroundColor: Colors.white,
     );
   }
 

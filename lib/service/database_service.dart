@@ -137,7 +137,7 @@ class DatabaseService {
       ''');
 
         // **Inser default data**
-        insertDefaultData(db);
+        // insertDefaultData(db);
       },
     );
   }
