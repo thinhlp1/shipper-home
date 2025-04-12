@@ -2,7 +2,6 @@ import 'package:base/components/contact/contact_component.dart';
 import 'package:base/config/view_widget.dart';
 import 'package:base/screens/contact/contact_action.dart';
 import 'package:base/screens/guide/contact_guide_screen.dart';
-import 'package:base/screens/guide/customer_guide_screen.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';

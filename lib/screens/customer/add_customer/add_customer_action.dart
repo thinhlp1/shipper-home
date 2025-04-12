@@ -324,9 +324,9 @@ class AddCustomerAction extends ViewActions {
   /// and `mapController` with the latitude and longitude of the current position.
   Future<void> getCurrentLocation() async {
     LoadingUtil.showLoading();
-    await Future.delayed(const Duration(milliseconds: 500));
-    LoadingUtil.hideLoading();
+    // await Future.delayed(const Duration(milliseconds: 500));
     position = await GoogleMapService.determinePosition();
+    LoadingUtil.hideLoading();
     if (position != null) {
       mapPosition.value =
           '${position!.latitude.toString()}, ${position!.longitude.toString()}';
