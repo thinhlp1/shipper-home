@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:base/config/view_widget.dart';
-import 'package:base/screens/guide/add_guide_screen.dart';
+import 'package:base/screens/drawer/Sidebar.dart';
 import 'package:base/utils/assets.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
@@ -47,14 +47,18 @@ class _AddCustomerViewState
             ? 'Cập nhật khách hàng'
             : 'Thêm khách hàng'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            onPressed: () {
-              Get.to(const AddGuideScreen());
-            },
+          Builder(
+            // BẮT BUỘC dùng Builder để lấy đúng context
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
           ),
         ],
       ),
+      drawer: Sidebar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

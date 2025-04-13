@@ -1,7 +1,7 @@
 import 'package:base/components/customer/customer_component.dart';
 import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
-import 'package:base/screens/guide/customer_guide_screen.dart';
+import 'package:base/screens/drawer/Sidebar.dart';
 import 'package:base/utils/assets.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/models/customer.dart';
@@ -47,15 +47,20 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Disalbe drawer icon
         actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            onPressed: () {
-              Get.to(const CustomerGuidetScreen());
-            },
+          Builder(
+            // BẮT BUỘC dùng Builder để lấy đúng context
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
           ),
         ],
       ),
+      drawer: Sidebar(),
       body: Column(
         children: [
           const SizedBox(height: 10),
