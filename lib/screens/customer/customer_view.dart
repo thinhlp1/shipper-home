@@ -60,7 +60,7 @@ class _CustomerScreenState extends ViewWidget<CustomerScreen, CustomerAction> {
           ),
         ],
       ),
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       body: Column(
         children: [
           const SizedBox(height: 10),

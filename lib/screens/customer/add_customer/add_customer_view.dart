@@ -58,7 +58,7 @@ class _AddCustomerViewState
           ),
         ],
       ),
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

@@ -1,11 +1,13 @@
 import 'package:base/screens/guide/app_guide_screen.dart';
+import 'package:base/screens/guide/feedback_screen.dart';
 import 'package:base/screens/guide/info_screen.dart';
 import 'package:base/utils/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class Sidebar extends StatelessWidget {
+  const Sidebar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -45,8 +47,7 @@ class Sidebar extends StatelessWidget {
               leading: const Icon(Icons.feedback_outlined),
               title: const Text('Góp ý / Phản hồi'),
               onTap: () {
-                // Navigator.pop(context);
-                // showFeedbackPopup();
+                Get.to(const FeedbackForm()); // Navigate to FeedbackForm
               },
             ),
             const Spacer(),

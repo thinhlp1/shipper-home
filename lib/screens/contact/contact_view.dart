@@ -7,7 +7,6 @@ import 'package:base/utils/text_field_validation.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 
@@ -46,7 +45,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
             ),
           ],
         ),
-        drawer: Sidebar(),
+        drawer: const Sidebar(),
         body: Column(
           children: [
             const SizedBox(height: 10),

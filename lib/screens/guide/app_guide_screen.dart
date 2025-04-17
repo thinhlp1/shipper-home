@@ -1,8 +1,6 @@
-import 'package:base/screens/guide/info_screen.dart';
 import 'package:base/utils/hex_color.dart';
 import 'package:base/utils/theme_color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppGuideScreen extends StatelessWidget {
   const AppGuideScreen({super.key});

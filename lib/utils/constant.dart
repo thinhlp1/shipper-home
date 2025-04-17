@@ -3,5 +3,7 @@
 class Constants {
   static const BASE_URL = "";
 
-  static const horizontalPadding = 16.0;
+  static const APP_EMAIL = "shipper.home.app@gmail.com";
+
+  
 }
