@@ -1,5 +1,6 @@
 import 'package:base/config/global_store.dart';
 import 'package:base/config/view_widget.dart';
+import 'package:base/screens/guide/privacy_policy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
@@ -17,6 +18,17 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainSreenState extends ViewWidget<MainScreen, MainActions> {
+
+@override
+  void initState() {
+    super.initState();
+
+    // Đợi 1 chút để đảm bảo UI sẵn sàng
+    Future.delayed(Duration.zero, () {
+      PrivacyPolicy.checkPrivacyPolicy();
+    });
+  }
+
   @override
   Widget render(BuildContext context) {
     return Scaffold(

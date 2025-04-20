@@ -1,11 +1,9 @@
 import 'package:base/screens/guide/app_guide_screen.dart';
-import 'package:base/screens/guide/feedback_screen.dart';
 import 'package:base/screens/guide/info_screen.dart';
 import 'package:base/utils/assets.dart';
 import 'package:base/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Sidebar extends StatelessWidget {
