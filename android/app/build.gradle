@@ -29,6 +29,12 @@ if (flutterVersionName == null) {
 
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "thinhlp.shipperhome"
     compileSdkVersion 35
@@ -56,6 +62,15 @@ android {
         targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+  signingConfigs {
+        release {
+            storeFile file(properties["storeFile"])  // Đọc từ key.properties
+            storePassword properties["storePassword"]
+            keyAlias properties["keyAlias"]
+            keyPassword properties["keyPassword"]
+        }
     }
 
     buildTypes {
