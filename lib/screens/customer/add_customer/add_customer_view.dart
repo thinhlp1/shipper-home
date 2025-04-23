@@ -43,6 +43,7 @@ class _AddCustomerViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Disalbe drawer icon
         title: Text(widget.customer != null && !widget.isAddFromContact
             ? 'Cập nhật khách hàng'
             : 'Thêm khách hàng'),

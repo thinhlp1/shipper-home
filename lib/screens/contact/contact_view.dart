@@ -33,6 +33,7 @@ class _ContactScreenState extends ViewWidget<ContactScreen, ContactAction> {
 
     return Scaffold(
         appBar: AppBar(
+           automaticallyImplyLeading: false, // Disalbe drawer icon
            actions: [
             Builder(
               // BẮT BUỘC dùng Builder để lấy đúng context

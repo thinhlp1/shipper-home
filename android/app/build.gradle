@@ -33,8 +33,9 @@ def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}else{
+    throw new GradleException("key.properties file not found. Please create it with the required properties.")
 }
-
 android {
     namespace "thinhlp.shipperhome"
     compileSdkVersion 35
@@ -64,20 +65,19 @@ android {
         versionName flutterVersionName
     }
 
-  signingConfigs {
-        release {
-            storeFile file(properties["storeFile"])  // Đọc từ key.properties
-            storePassword properties["storePassword"]
-            keyAlias properties["keyAlias"]
-            keyPassword properties["keyPassword"]
-        }
+signingConfigs {
+    release {
+        storeFile = file(keystoreProperties["storeFile"])
+        storePassword = keystoreProperties["storePassword"]
+        keyAlias = keystoreProperties["keyAlias"]
+        keyPassword = keystoreProperties["keyPassword"]
     }
-
+}
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+            shrinkResources true
+            minifyEnabled true
         }
     }
 }
