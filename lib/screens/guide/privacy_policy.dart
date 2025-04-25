@@ -35,7 +35,7 @@ class PrivacyPolicy {
                   GestureDetector(
                     onTap: () async {
                       final url = Uri.parse(
-                          'https://www.termsfeed.com/live/23283a59-9afc-45e8-94ea-a77388a55202');
+                          'https://thinhlp1.github.io/shipper-home-privacy-policy/');
                       if (await canLaunchUrl(url)) {
                         await launchUrl(url,
                             mode: LaunchMode.externalApplication);
