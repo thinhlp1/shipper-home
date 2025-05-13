@@ -47,6 +47,12 @@ class _AddCustomerViewState
         title: Text(widget.customer != null && !widget.isAddFromContact
             ? 'Cập nhật khách hàng'
             : 'Thêm khách hàng'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         actions: [
           Builder(
             // BẮT BUỘC dùng Builder để lấy đúng context

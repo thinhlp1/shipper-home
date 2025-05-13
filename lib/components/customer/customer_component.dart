@@ -165,16 +165,20 @@ class _CustomerComponenttState
                           Expanded(
                             child: Row(
                               children: [
-                                Text(
-                                    customer.name != null && customer.name != ''
-                                        ? customer.name!
-                                        : customer.phone,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                    overflow: TextOverflow.ellipsis),
-                                const Spacer(),
+                                Expanded(
+                                  child: Text(
+                                      customer.name != null &&
+                                              customer.name != ''
+                                          ? customer.name!
+                                          : customer.phone,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                                const SizedBox(width: 8),
                                 Text(
                                   Utils.formatDate(
                                     customer.updatedAt,
