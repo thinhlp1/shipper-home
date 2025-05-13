@@ -40,7 +40,22 @@ class CustomerAction extends ViewActions {
   /// Load list of customers
   /// @return void
   Future<void> fetchCustomers() async {
-    customers.value = (await _customerService.getCustomers()).cast<Customer>();
+    final fetchedCustomers =
+        (await _customerService.getCustomers()).cast<Customer>();
+    if (fetchedCustomers.isNotEmpty) {
+      final now = DateTime.now();
+      for (final customer in fetchedCustomers) {
+        final createdAt = customer.createdAt;
+        if (createdAt.year == now.year &&
+            createdAt.month == now.month &&
+            createdAt.day == now.day) {
+          customer.isNew = true;
+        } else {
+          customer.isNew = false;
+        }
+      }
+    }
+    customers.value = fetchedCustomers;
     filteredCustomer.assignAll(customers);
     favoriteCount.value =
         customers.where((customer) => customer.isFavorite).length;

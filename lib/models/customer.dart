@@ -12,6 +12,8 @@ class Customer {
   DateTime updatedAt;
   List<String> imageUrl;
 
+  bool isNew = false;
+
   Customer({
     this.id,
     this.name,
@@ -24,6 +26,7 @@ class Customer {
     this.position = 0,
     this.deleted = 0,
     this.isFavorite = false,
+    this.isNew = false,
     List<String>? imageUrl,
   }) : imageUrl = imageUrl ?? [];
 

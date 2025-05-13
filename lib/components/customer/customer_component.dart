@@ -5,6 +5,7 @@ import 'package:base/config/view_widget.dart';
 import 'package:base/models/customer.dart';
 import 'package:base/utils/assets.dart';
 import 'package:base/utils/snackbar_util.dart';
+import 'package:base/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -173,7 +174,39 @@ class _CustomerComponenttState
                                         .labelMedium!
                                         .copyWith(fontWeight: FontWeight.bold),
                                     overflow: TextOverflow.ellipsis),
-                                const SizedBox(width: 8),
+                                const Spacer(),
+                                Text(
+                                  Utils.formatDate(
+                                    customer.updatedAt,
+                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .copyWith(
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.grey),
+                                ),
+                                const SizedBox(width: 6),
+                                if (customer.isNew)
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.redAccent,
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Text(
+                                      'Mới',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
